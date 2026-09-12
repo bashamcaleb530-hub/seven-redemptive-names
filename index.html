@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Seven Redemptive Names of God</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <meta
     name="description"
     content="Know who God is. Know what He has provided. Stand in His truth."
@@ -649,8 +650,13 @@
         <a href="#teaching-areas">Teaching Areas</a>
       </nav>
 
-      <a class="account-button" href="account.html" aria-label="Open account">
-        Account
+      <a
+        id="accountNavButton"
+        class="account-button"
+        href="account.html"
+        aria-label="Open account"
+      >
+        👤 Account
       </a>
     </div>
   </header>
@@ -834,6 +840,150 @@
 
     </div>
   </footer>
+
+
+  <script>
+    // Keep the homepage Account button synchronized with Supabase Auth.
+    // Admin authorization itself remains protected by Supabase / RLS.
+    const SUPABASE_URL =
+      "https://pjkkxvntssvukulxipfr.supabase.co";
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_1kehaIywv1Wb9Iwj2OPGdg_aFosOSwK";
+
+    const homeSupabase =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
+
+    const accountNavButton =
+      document.getElementById("accountNavButton");
+
+    function setAccountButtonSignedOut() {
+      if (!accountNavButton) return;
+
+      accountNavButton.textContent = "👤 Account";
+      accountNavButton.setAttribute(
+        "aria-label",
+        "Open account"
+      );
+      accountNavButton.title = "Account";
+    }
+
+    function setAccountButtonMember() {
+      if (!accountNavButton) return;
+
+      accountNavButton.textContent = "👤 My Account";
+      accountNavButton.setAttribute(
+        "aria-label",
+        "Open my account"
+      );
+      accountNavButton.title = "My Account";
+    }
+
+    function setAccountButtonAdmin() {
+      if (!accountNavButton) return;
+
+      accountNavButton.textContent = "⚙ Admin";
+      accountNavButton.setAttribute(
+        "aria-label",
+        "Open admin account"
+      );
+      accountNavButton.title = "Admin";
+    }
+
+    async function updateAccountNavButton(session) {
+      if (
+        !session ||
+        !session.user
+      ) {
+        setAccountButtonSignedOut();
+        return;
+      }
+
+      // Show the normal signed-in state immediately.
+      setAccountButtonMember();
+
+      try {
+        const {
+          data: profile,
+          error
+        } =
+          await homeSupabase
+            .from("profiles")
+            .select("role")
+            .eq("id", session.user.id)
+            .maybeSingle();
+
+        if (error) {
+          console.error(
+            "Could not read account role:",
+            error
+          );
+          return;
+        }
+
+        if (
+          profile &&
+          profile.role === "admin"
+        ) {
+          setAccountButtonAdmin();
+        }
+      }
+
+      catch (error) {
+        console.error(
+          "Could not update account button:",
+          error
+        );
+      }
+    }
+
+    async function initializeAccountNav() {
+      try {
+        const {
+          data: {
+            session
+          }
+        } =
+          await homeSupabase
+            .auth
+            .getSession();
+
+        await updateAccountNavButton(
+          session
+        );
+      }
+
+      catch (error) {
+        console.error(
+          "Could not check account session:",
+          error
+        );
+
+        setAccountButtonSignedOut();
+      }
+    }
+
+    homeSupabase
+      .auth
+      .onAuthStateChange(
+        function(event, session) {
+          // Defer database work outside the auth callback.
+          window.setTimeout(
+            function() {
+              updateAccountNavButton(
+                session
+              );
+            },
+            0
+          );
+        }
+      );
+
+    initializeAccountNav();
+  </script>
 
 </body>
 </html>
