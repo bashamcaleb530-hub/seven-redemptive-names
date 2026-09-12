@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Account | Seven Redemptive Names of God</title>
+  <meta name="description" content="Sign in, create an account, manage study progress, and access administration for Seven Redemptive Names of God." />
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --burgundy: #4a0d12;
+      --burgundy-dark: #22080a;
+      --black: #0d0b09;
+      --charcoal: #17130f;
+      --cream: #f2e5cb;
+      --cream-light: #fbf4e6;
+      --gold: #c89b45;
+      --gold-light: #e0bd72;
+      --gold-dark: #8e6522;
+      --text: #f6ecd7;
+      --ink: #321a18;
+      --muted: #d8c7a5;
+      --danger: #9d353d;
+      --success: #7e9a64;
+      --panel: rgba(28, 18, 14, 0.93);
+      --panel-soft: rgba(53, 25, 24, 0.74);
+      --line: rgba(200, 155, 69, 0.36);
+      --shadow: 0 16px 40px rgba(0, 0, 0, 0.32);
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(111, 52, 25, 0.22), transparent 34%),
+        linear-gradient(180deg, #120d09 0%, #090806 100%);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; }
+    button, input, textarea, select { font: inherit; }
+    button { cursor: pointer; }
+
+    .hidden { display: none !important; }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: linear-gradient(90deg, rgba(73, 8, 13, .98), rgba(31, 7, 8, .98));
+      border-bottom: 1px solid rgba(224, 189, 114, .65);
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      min-height: 76px;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+    }
+
+    .brand {
+      color: #efd28c;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: 1.05rem;
+      letter-spacing: .045em;
+      line-height: 1.12;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .header-link,
+    .outline-button,
+    .primary-button,
+    .danger-button,
+    .small-button {
+      border-radius: 7px;
+      padding: 10px 16px;
+      border: 1px solid var(--gold);
+      text-decoration: none;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+    }
+
+    .header-link,
+    .outline-button {
+      background: rgba(0,0,0,.18);
+      color: #fff4dc;
+    }
+
+    .header-link:hover,
+    .outline-button:hover { background: rgba(200,155,69,.12); }
+
+    .primary-button {
+      background: linear-gradient(180deg, var(--gold-light), var(--gold));
+      color: #2a160d;
+      font-weight: 700;
+      border-color: var(--gold-light);
+    }
+
+    .primary-button:hover,
+    .small-button:hover { transform: translateY(-1px); }
+
+    .danger-button {
+      background: rgba(157,53,61,.2);
+      color: #ffdede;
+      border-color: rgba(210,93,99,.7);
+    }
+
+    .small-button {
+      padding: 8px 11px;
+      background: rgba(200,155,69,.12);
+      color: var(--cream-light);
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 34px auto 60px;
+    }
+
+    .account-hero {
+      text-align: center;
+      padding: 34px 20px 26px;
+    }
+
+    .eyebrow {
+      color: var(--gold-light);
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-size: .78rem;
+      margin-bottom: 10px;
+    }
+
+    .account-hero h1 {
+      margin: 0;
+      color: #ecd18c;
+      text-transform: uppercase;
+      font-weight: 500;
+      letter-spacing: .02em;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+    }
+
+    .account-hero p {
+      margin: 12px auto 0;
+      max-width: 720px;
+      color: var(--muted);
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .panel h2,
+    .panel h3 { color: #ecd18c; margin-top: 0; }
+    .muted { color: var(--muted); }
+
+    .auth-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .auth-card,
+    .dashboard-card,
+    .admin-card {
+      background: linear-gradient(180deg, rgba(74,13,18,.42), rgba(13,11,9,.66));
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 20px;
+    }
+
+    label {
+      display: block;
+      margin: 14px 0 6px;
+      color: var(--cream-light);
+      font-weight: 700;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px 13px;
+      border-radius: 8px;
+      border: 1px solid rgba(224,189,114,.46);
+      background: rgba(7,5,4,.72);
+      color: white;
+      outline: none;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--gold-light);
+      box-shadow: 0 0 0 3px rgba(200,155,69,.14);
+    }
+
+    textarea { min-height: 110px; resize: vertical; }
+
+    .password-wrap { position: relative; }
+    .password-wrap input { padding-right: 78px; }
+    .password-toggle {
+      position: absolute;
+      right: 8px;
+      top: 8px;
+      border: 0;
+      background: transparent;
+      color: var(--gold-light);
+      padding: 4px 6px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .form-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .text-link {
+      color: var(--gold-light);
+      border: 0;
+      background: transparent;
+      padding: 0;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .status {
+      min-height: 24px;
+      margin-top: 14px;
+      color: var(--gold-light);
+    }
+
+    .status.error { color: #ffb2b7; }
+    .status.success { color: #c7e8ab; }
+
+    .account-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-size: .78rem;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      border: 1px solid var(--line);
+      color: var(--gold-light);
+      background: rgba(200,155,69,.09);
+      margin-left: 8px;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .dashboard-card h3 { margin-bottom: 8px; }
+    .metric { font-size: 2rem; color: var(--gold-light); line-height: 1.1; }
+
+    .progress-bar {
+      width: 100%;
+      height: 10px;
+      background: rgba(255,255,255,.07);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold-light));
+      transition: width .35s ease;
+    }
+
+    .list { display: grid; gap: 10px; margin-top: 14px; }
+    .list-item {
+      border: 1px solid rgba(200,155,69,.23);
+      background: rgba(0,0,0,.19);
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .list-title { color: var(--cream-light); font-weight: 700; }
+    .list-meta { color: #baa988; font-size: .85rem; margin-top: 4px; }
+    .empty { color: #ad9c7d; font-style: italic; }
+
+    .admin-banner {
+      border-color: rgba(224,189,114,.65);
+      background:
+        linear-gradient(90deg, rgba(74,13,18,.88), rgba(34,8,10,.88)),
+        var(--panel);
+    }
+
+    .admin-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .admin-toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 12px 0;
+    }
+
+    .admin-table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 620px; }
+    th, td { padding: 11px 10px; border-bottom: 1px solid rgba(200,155,69,.18); text-align: left; }
+    th { color: var(--gold-light); font-weight: 700; }
+    td { color: var(--cream); }
+
+    footer {
+      border-top: 1px solid rgba(224,189,114,.42);
+      color: #bda98a;
+      text-align: center;
+      padding: 24px 16px 36px;
+      font-size: .9rem;
+    }
+
+    @media (max-width: 900px) {
+      .dashboard-grid { grid-template-columns: 1fr 1fr; }
+      .admin-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 700px) {
+      .nav-wrap { align-items: flex-start; flex-direction: column; }
+      .auth-grid,
+      .dashboard-grid,
+      .form-row { grid-template-columns: 1fr; }
+      .page { width: min(100% - 20px, 1180px); margin-top: 18px; }
+      .panel { padding: 17px; }
+      .header-actions { width: 100%; }
+      .header-link { flex: 1; text-align: center; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="nav-wrap">
+      <a class="brand" href="index.html">Seven Redemptive<br />Names of God</a>
+      <div class="header-actions">
+        <a class="header-link" href="index.html">← Home</a>
+        <a class="header-link" href="redemptive-names.html">Teaching Areas</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="account-hero">
+      <div class="eyebrow">Personal Study Account</div>
+      <h1>My Account</h1>
+      <p>Sign in to continue your study, save your progress, and keep your work connected to your account.</p>
+    </section>
+
+    <!-- SIGNED OUT -->
+    <section id="signedOutArea" class="panel">
+      <div class="auth-grid">
+        <div class="auth-card">
+          <h2>Log In</h2>
+          <p class="muted">Welcome back. Continue where you left off.</p>
+
+          <label for="loginEmail">Email</label>
+          <input id="loginEmail" type="email" autocomplete="email" placeholder="you@example.com" />
+
+          <label for="loginPassword">Password</label>
+          <div class="password-wrap">
+            <input id="loginPassword" type="password" autocomplete="current-password" placeholder="Password" />
+            <button class="password-toggle" type="button" data-toggle-password="loginPassword">Show</button>
+          </div>
+
+          <div class="form-actions">
+            <button id="loginButton" class="primary-button" type="button">Log In</button>
+            <button id="forgotPasswordButton" class="text-link" type="button">Forgot password?</button>
+          </div>
+        </div>
+
+        <div class="auth-card">
+          <h2>Create Account</h2>
+          <p class="muted">Create your free account and keep your study work together.</p>
+
+          <div class="form-row">
+            <div>
+              <label for="signupFirstName">First Name</label>
+              <input id="signupFirstName" type="text" autocomplete="given-name" placeholder="First name" />
+            </div>
+            <div>
+              <label for="signupLastName">Last Name</label>
+              <input id="signupLastName" type="text" autocomplete="family-name" placeholder="Last name" />
+            </div>
+          </div>
+
+          <label for="signupEmail">Email</label>
+          <input id="signupEmail" type="email" autocomplete="email" placeholder="you@example.com" />
+
+          <label for="signupPassword">Password</label>
+          <div class="password-wrap">
+            <input id="signupPassword" type="password" autocomplete="new-password" placeholder="At least 8 characters" />
+            <button class="password-toggle" type="button" data-toggle-password="signupPassword">Show</button>
+          </div>
+
+          <label for="signupConfirmPassword">Confirm Password</label>
+          <div class="password-wrap">
+            <input id="signupConfirmPassword" type="password" autocomplete="new-password" placeholder="Re-enter password" />
+            <button class="password-toggle" type="button" data-toggle-password="signupConfirmPassword">Show</button>
+          </div>
+
+          <div class="form-actions">
+            <button id="signupButton" class="primary-button" type="button">Create Account</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="authStatus" class="status" aria-live="polite"></div>
+    </section>
+
+    <!-- SIGNED IN -->
+    <section id="signedInArea" class="hidden">
+      <div class="panel account-header">
+        <div>
+          <div class="eyebrow">Signed In</div>
+          <h2 style="margin-bottom:6px;">Welcome, <span id="displayName">Student</span><span id="roleBadge" class="badge">Member</span></h2>
+          <div class="muted">Signed in as <strong id="accountEmail"></strong></div>
+        </div>
+        <button id="logoutButton" class="danger-button" type="button">Log Out</button>
+      </div>
+
+      <div class="panel">
+        <h2>My Study Dashboard</h2>
+        <p class="muted">Your progress and saved work will stay connected to this account.</p>
+
+        <div class="dashboard-grid">
+          <div class="dashboard-card">
+            <h3>Study Progress</h3>
+            <div class="metric"><span id="progressPercent">0</span>%</div>
+            <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+            <div id="progressText" class="list-meta">No lessons completed yet.</div>
+          </div>
+
+          <div class="dashboard-card">
+            <h3>Completed Lessons</h3>
+            <div id="completedCount" class="metric">0</div>
+            <p class="muted">Lessons marked complete.</p>
+          </div>
+
+          <div class="dashboard-card">
+            <h3>Saved Items</h3>
+            <div id="savedCount" class="metric">0</div>
+            <p class="muted">Saved teachings, notes, or favorites.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>My Saved Study Work</h2>
+        <div id="savedItemsList" class="list"></div>
+      </div>
+
+      <div class="panel">
+        <h2>Profile</h2>
+        <div class="form-row">
+          <div>
+            <label for="profileFirstName">First Name</label>
+            <input id="profileFirstName" type="text" />
+          </div>
+          <div>
+            <label for="profileLastName">Last Name</label>
+            <input id="profileLastName" type="text" />
+          </div>
+        </div>
+        <div class="form-actions">
+          <button id="saveProfileButton" class="primary-button" type="button">Save Profile</button>
+        </div>
+        <div id="accountStatus" class="status" aria-live="polite"></div>
+      </div>
+
+      <!-- ADMIN ONLY -->
+      <section id="adminArea" class="hidden">
+        <div class="panel admin-banner">
+          <div class="eyebrow">Administrator Access</div>
+          <h2>Admin Dashboard</h2>
+          <p class="muted">Manage members, site content, support messages, and study activity. This section appears only when Supabase reports your profile role as <strong>admin</strong>.</p>
+        </div>
+
+        <div class="admin-grid">
+          <div class="admin-card">
+            <h3>Member Overview</h3>
+            <div class="metric" id="adminUserCount">0</div>
+            <p class="muted">Profiles visible to the admin role.</p>
+            <button id="refreshUsersButton" class="small-button" type="button">Refresh Members</button>
+          </div>
+
+          <div class="admin-card">
+            <h3>Support Messages</h3>
+            <div class="metric" id="adminMessageCount">0</div>
+            <p class="muted">Messages waiting in the support table.</p>
+            <button id="refreshMessagesButton" class="small-button" type="button">Refresh Messages</button>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-top:22px;">
+          <h2>Members</h2>
+          <div class="admin-table-wrap">
+            <table>
+              <thead>
+                <tr><th>Name</th><th>Email</th><th>Role</th><th>Joined</th></tr>
+              </thead>
+              <tbody id="adminUsersBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>Support Messages</h2>
+          <div id="adminMessagesList" class="list"></div>
+          <div id="adminStatus" class="status" aria-live="polite"></div>
+        </div>
+
+        <div class="panel">
+          <h2>Site Announcement</h2>
+          <p class="muted">Save a message that your site can display later wherever you connect the <code>site_content</code> table.</p>
+          <label for="announcementText">Announcement</label>
+          <textarea id="announcementText" placeholder="Enter announcement text..."></textarea>
+          <div class="form-actions">
+            <button id="saveAnnouncementButton" class="primary-button" type="button">Save Announcement</button>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    Seven Redemptive Names of God &nbsp;•&nbsp; Rooted in Truth. Equipped for Life.
+  </footer>
+
+  <script>
+    // ---------------------------------------------------------------------
+    // SUPABASE CONFIGURATION
+    // These are publishable browser credentials. NEVER put a service-role
+    // key in this file. Security is enforced by Supabase Row Level Security.
+    // ---------------------------------------------------------------------
+    const SUPABASE_URL = "https://pjkkxvntssvukulxipfr.supabase.co";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_1kehaIywv1Wb9Iwj2OPGdg_aFosOSwK";
+
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+    const signedOutArea = document.getElementById("signedOutArea");
+    const signedInArea = document.getElementById("signedInArea");
+    const adminArea = document.getElementById("adminArea");
+    const authStatus = document.getElementById("authStatus");
+    const accountStatus = document.getElementById("accountStatus");
+    const adminStatus = document.getElementById("adminStatus");
+
+    let currentUser = null;
+    let currentProfile = null;
+
+    function setStatus(element, message, type = "") {
+      element.textContent = message || "";
+      element.className = "status" + (type ? " " + type : "");
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>'"]/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "'": "&#039;",
+        '"': "&quot;"
+      })[char]);
+    }
+
+    function readableDate(value) {
+      if (!value) return "—";
+      const date = new Date(value);
+      return Number.isNaN(date.getTime()) ? "—" : date.toLocaleString();
+    }
+
+    function showSignedOut() {
+      currentUser = null;
+      currentProfile = null;
+      signedOutArea.classList.remove("hidden");
+      signedInArea.classList.add("hidden");
+      adminArea.classList.add("hidden");
+      document.getElementById("accountEmail").textContent = "";
+      setStatus(accountStatus, "");
+    }
+
+    async function getProfile(user) {
+      const { data, error } = await supabaseClient
+        .from("profiles")
+        .select("id,email,first_name,last_name,role,created_at")
+        .eq("id", user.id)
+        .maybeSingle();
+
+      if (error) throw error;
+
+      if (!data) {
+        const metadata = user.user_metadata || {};
+        const { data: inserted, error: insertError } = await supabaseClient
+          .from("profiles")
+          .upsert({
+            id: user.id,
+            email: user.email,
+            first_name: metadata.first_name || "",
+            last_name: metadata.last_name || ""
+          }, { onConflict: "id" })
+          .select("id,email,first_name,last_name,role,created_at")
+          .single();
+
+        if (insertError) throw insertError;
+        return inserted;
+      }
+
+      return data;
+    }
+
+    async function showSignedIn(user) {
+      currentUser = user;
+      signedOutArea.classList.add("hidden");
+      signedInArea.classList.remove("hidden");
+      document.getElementById("accountEmail").textContent = user.email || "Signed-in user";
+      setStatus(accountStatus, "Loading your account...");
+
+      try {
+        currentProfile = await getProfile(user);
+
+        const first = currentProfile?.first_name || "";
+        const last = currentProfile?.last_name || "";
+        const fullName = [first, last].filter(Boolean).join(" ") || "Student";
+        const role = currentProfile?.role || "member";
+
+        document.getElementById("displayName").textContent = fullName;
+        document.getElementById("roleBadge").textContent = role;
+        document.getElementById("profileFirstName").value = first;
+        document.getElementById("profileLastName").value = last;
+
+        await Promise.all([
+          loadStudyProgress(user),
+          loadSavedItems(user)
+        ]);
+
+        if (role === "admin") {
+          adminArea.classList.remove("hidden");
+          await Promise.all([
+            loadAdminUsers(),
+            loadAdminMessages(),
+            loadAnnouncement()
+          ]);
+        } else {
+          adminArea.classList.add("hidden");
+        }
+
+        setStatus(accountStatus, "");
+      } catch (error) {
+        console.error(error);
+        setStatus(accountStatus, "Your account loaded, but some profile data could not be retrieved. Check the Supabase setup and RLS policies.", "error");
+      }
+    }
+
+    async function loadStudyProgress(user) {
+      const { data, error } = await supabaseClient
+        .from("study_progress")
+        .select("lesson_key,completed")
+        .eq("user_id", user.id);
+
+      if (error) {
+        console.error(error);
+        return;
+      }
+
+      const rows = data || [];
+      const completed = rows.filter(row => row.completed).length;
+      const total = Math.max(rows.length, 7); // Seven core redemptive-name lessons.
+      const percent = total ? Math.min(100, Math.round((completed / total) * 100)) : 0;
+
+      document.getElementById("completedCount").textContent = completed;
+      document.getElementById("progressPercent").textContent = percent;
+      document.getElementById("progressFill").style.width = percent + "%";
+      document.getElementById("progressText").textContent = completed
+        ? completed + " of " + total + " tracked lessons completed."
+        : "No lessons completed yet.";
+    }
+
+    async function loadSavedItems(user) {
+      const list = document.getElementById("savedItemsList");
+      list.innerHTML = '<div class="empty">Loading saved work...</div>';
+
+      const { data, error } = await supabaseClient
+        .from("saved_items")
+        .select("id,item_type,title,content,source_url,created_at")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error(error);
+        list.innerHTML = '<div class="empty">Saved work could not be loaded.</div>';
+        return;
+      }
+
+      const items = data || [];
+      document.getElementById("savedCount").textContent = items.length;
+
+      if (!items.length) {
+        list.innerHTML = '<div class="empty">No saved study items yet.</div>';
+        return;
+      }
+
+      list.innerHTML = items.map(item => `
+        <div class="list-item">
+          <div class="list-title">${escapeHtml(item.title || "Saved Item")}</div>
+          <div>${escapeHtml(item.content || "")}</div>
+          <div class="list-meta">${escapeHtml(item.item_type || "study")} • ${escapeHtml(readableDate(item.created_at))}</div>
+        </div>
+      `).join("");
+    }
+
+    async function loadAdminUsers() {
+      const body = document.getElementById("adminUsersBody");
+      body.innerHTML = '<tr><td colspan="4" class="muted">Loading members...</td></tr>';
+
+      const { data, error } = await supabaseClient
+        .from("profiles")
+        .select("first_name,last_name,email,role,created_at")
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error(error);
+        body.innerHTML = '<tr><td colspan="4" class="muted">Members could not be loaded.</td></tr>';
+        setStatus(adminStatus, "Member list could not be loaded. Check admin RLS policies.", "error");
+        return;
+      }
+
+      const users = data || [];
+      document.getElementById("adminUserCount").textContent = users.length;
+
+      body.innerHTML = users.length ? users.map(user => {
+        const name = [user.first_name, user.last_name].filter(Boolean).join(" ") || "—";
+        return `<tr>
+          <td>${escapeHtml(name)}</td>
+          <td>${escapeHtml(user.email || "—")}</td>
+          <td>${escapeHtml(user.role || "member")}</td>
+          <td>${escapeHtml(readableDate(user.created_at))}</td>
+        </tr>`;
+      }).join("") : '<tr><td colspan="4" class="muted">No profiles found.</td></tr>';
+    }
+
+    async function loadAdminMessages() {
+      const list = document.getElementById("adminMessagesList");
+      list.innerHTML = '<div class="empty">Loading messages...</div>';
+
+      const { data, error } = await supabaseClient
+        .from("support_messages")
+        .select("id,name,email,message_type,message,created_at")
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error(error);
+        list.innerHTML = '<div class="empty">Support messages could not be loaded.</div>';
+        setStatus(adminStatus, "Support messages could not be loaded.", "error");
+        return;
+      }
+
+      const messages = data || [];
+      document.getElementById("adminMessageCount").textContent = messages.length;
+
+      if (!messages.length) {
+        list.innerHTML = '<div class="empty">No support messages yet.</div>';
+        return;
+      }
+
+      list.innerHTML = messages.map(item => `
+        <div class="list-item" data-message-id="${escapeHtml(item.id)}">
+          <div class="list-title">${escapeHtml(item.message_type || "Message")} — ${escapeHtml(item.name || "Unknown sender")}</div>
+          <div>${escapeHtml(item.message || "")}</div>
+          <div class="list-meta">${escapeHtml(item.email || "No email")} • ${escapeHtml(readableDate(item.created_at))}</div>
+          <div class="admin-toolbar">
+            ${item.email ? `<a class="small-button" href="mailto:${encodeURIComponent(item.email)}?subject=${encodeURIComponent("Seven Redemptive Names of God Support Reply")}">Reply</a>` : ""}
+            <button class="danger-button" type="button" data-delete-message="${escapeHtml(item.id)}">Delete</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    async function loadAnnouncement() {
+      const { data, error } = await supabaseClient
+        .from("site_content")
+        .select("content")
+        .eq("content_key", "announcement")
+        .maybeSingle();
+
+      if (error) {
+        console.error(error);
+        return;
+      }
+
+      document.getElementById("announcementText").value = data?.content || "";
+    }
+
+    async function checkAccount() {
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      if (session?.user) {
+        await showSignedIn(session.user);
+      } else {
+        showSignedOut();
+      }
+    }
+
+    document.querySelectorAll("[data-toggle-password]").forEach(button => {
+      button.addEventListener("click", () => {
+        const input = document.getElementById(button.dataset.togglePassword);
+        const show = input.type === "password";
+        input.type = show ? "text" : "password";
+        button.textContent = show ? "Hide" : "Show";
+      });
+    });
+
+    document.getElementById("loginButton").addEventListener("click", async () => {
+      const email = document.getElementById("loginEmail").value.trim();
+      const password = document.getElementById("loginPassword").value;
+
+      if (!email || !password) {
+        setStatus(authStatus, "Enter your email and password.", "error");
+        return;
+      }
+
+      setStatus(authStatus, "Signing in...");
+      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+
+      if (error) {
+        setStatus(authStatus, error.message, "error");
+        return;
+      }
+
+      setStatus(authStatus, "", "");
+      await showSignedIn(data.user);
+    });
+
+    document.getElementById("signupButton").addEventListener("click", async () => {
+      const firstName = document.getElementById("signupFirstName").value.trim();
+      const lastName = document.getElementById("signupLastName").value.trim();
+      const email = document.getElementById("signupEmail").value.trim();
+      const password = document.getElementById("signupPassword").value;
+      const confirmPassword = document.getElementById("signupConfirmPassword").value;
+
+      if (!firstName || !lastName || !email || !password || !confirmPassword) {
+        setStatus(authStatus, "Complete all Create Account fields.", "error");
+        return;
+      }
+
+      if (password.length < 8) {
+        setStatus(authStatus, "Password must be at least 8 characters.", "error");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        setStatus(authStatus, "The passwords do not match.", "error");
+        return;
+      }
+
+      setStatus(authStatus, "Creating your account...");
+
+      const { data, error } = await supabaseClient.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            first_name: firstName,
+            last_name: lastName
+          }
+        }
+      });
+
+      if (error) {
+        setStatus(authStatus, error.message, "error");
+        return;
+      }
+
+      if (data.session?.user) {
+        setStatus(authStatus, "Account created.", "success");
+        await showSignedIn(data.session.user);
+      } else {
+        setStatus(authStatus, "Account created. Check your email for the confirmation link, then log in.", "success");
+      }
+    });
+
+    document.getElementById("forgotPasswordButton").addEventListener("click", async () => {
+      const email = document.getElementById("loginEmail").value.trim();
+
+      if (!email) {
+        setStatus(authStatus, "Enter your email in the Log In box first.", "error");
+        return;
+      }
+
+      setStatus(authStatus, "Sending password reset email...");
+      const redirectTo = new URL("account.html", window.location.href).href;
+      const { error } = await supabaseClient.auth.resetPasswordForEmail(email, { redirectTo });
+
+      if (error) {
+        setStatus(authStatus, error.message, "error");
+        return;
+      }
+
+      setStatus(authStatus, "Password reset email sent.", "success");
+    });
+
+    document.getElementById("logoutButton").addEventListener("click", async () => {
+      await supabaseClient.auth.signOut();
+      showSignedOut();
+      setStatus(authStatus, "You are signed out.", "success");
+    });
+
+    document.getElementById("saveProfileButton").addEventListener("click", async () => {
+      if (!currentUser) return;
+
+      const firstName = document.getElementById("profileFirstName").value.trim();
+      const lastName = document.getElementById("profileLastName").value.trim();
+
+      setStatus(accountStatus, "Saving profile...");
+      const { error } = await supabaseClient
+        .from("profiles")
+        .update({ first_name: firstName, last_name: lastName })
+        .eq("id", currentUser.id);
+
+      if (error) {
+        setStatus(accountStatus, error.message, "error");
+        return;
+      }
+
+      document.getElementById("displayName").textContent = [firstName, lastName].filter(Boolean).join(" ") || "Student";
+      setStatus(accountStatus, "Profile saved.", "success");
+    });
+
+    document.getElementById("refreshUsersButton").addEventListener("click", loadAdminUsers);
+    document.getElementById("refreshMessagesButton").addEventListener("click", loadAdminMessages);
+
+    document.getElementById("adminMessagesList").addEventListener("click", async event => {
+      const button = event.target.closest("[data-delete-message]");
+      if (!button) return;
+
+      const id = button.dataset.deleteMessage;
+      if (!window.confirm("Delete this support message?")) return;
+
+      button.disabled = true;
+      button.textContent = "Deleting...";
+
+      const { error } = await supabaseClient
+        .from("support_messages")
+        .delete()
+        .eq("id", id);
+
+      if (error) {
+        setStatus(adminStatus, error.message, "error");
+        button.disabled = false;
+        button.textContent = "Delete";
+        return;
+      }
+
+      setStatus(adminStatus, "Support message deleted.", "success");
+      await loadAdminMessages();
+    });
+
+    document.getElementById("saveAnnouncementButton").addEventListener("click", async () => {
+      const content = document.getElementById("announcementText").value.trim();
+      setStatus(adminStatus, "Saving announcement...");
+
+      const { error } = await supabaseClient
+        .from("site_content")
+        .upsert({
+          content_key: "announcement",
+          content,
+          updated_by: currentUser?.id || null,
+          updated_at: new Date().toISOString()
+        }, { onConflict: "content_key" });
+
+      if (error) {
+        setStatus(adminStatus, error.message, "error");
+        return;
+      }
+
+      setStatus(adminStatus, "Announcement saved.", "success");
+    });
+
+    supabaseClient.auth.onAuthStateChange(async (event, session) => {
+      if (event === "SIGNED_OUT") {
+        showSignedOut();
+      }
+
+      if (event === "SIGNED_IN" && session?.user && session.user.id !== currentUser?.id) {
+        await showSignedIn(session.user);
+      }
+    });
+
+    checkAccount();
+  </script>
+</body>
+</html>
