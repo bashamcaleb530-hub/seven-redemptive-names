@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Seven Redemptive Names of God - Teaching</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    :root {
+      --burgundy: #4a0d12;
+      --burgundy-dark: #210709;
+      --black: #0b0907;
+      --charcoal: #17130f;
+      --cream: #f2e5cb;
+      --cream-light: #fff9ec;
+      --gold: #c89b45;
+      --gold-light: #e4c379;
+      --gold-dark: #8f6623;
+      --ink: #321a18;
+      --muted: #6d5c4c;
+      --green: #243823;
+      --line: rgba(166, 118, 43, 0.35);
+      --shadow: 0 14px 38px rgba(0, 0, 0, 0.22);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--ink);
+      background:
+        linear-gradient(rgba(244, 235, 215, 0.97), rgba(244, 235, 215, 0.97)),
+        repeating-linear-gradient(
+          45deg,
+          rgba(88, 61, 24, 0.04) 0,
+          rgba(88, 61, 24, 0.04) 1px,
+          transparent 1px,
+          transparent 4px
+        );
+      line-height: 1.7;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: linear-gradient(90deg, #4a0d12, #220709);
+      color: #f6ead1;
+      border-bottom: 1px solid var(--gold);
+      box-shadow: 0 5px 18px rgba(0,0,0,.18);
+    }
+
+    .topbar-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      min-height: 72px;
+      padding: 10px 20px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .home-link {
+      color: #f0cf82;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: .95rem;
+    }
+
+    .top-title {
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      line-height: 1.12;
+      font-size: 1.05rem;
+    }
+
+    .account-placeholder {
+      background: transparent;
+      border: 1px solid #d3a852;
+      color: #f9edd6;
+      border-radius: 6px;
+      padding: 9px 14px;
+      cursor: default;
+    }
+
+    .hero {
+      background:
+        radial-gradient(circle at 75% 25%, rgba(218, 167, 70, .22), transparent 28%),
+        linear-gradient(135deg, #120d09 0%, #2a0c0d 48%, #0a0806 100%);
+      color: white;
+      border-bottom: 1px solid var(--gold);
+    }
+
+    .hero-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 48px 22px;
+      text-align: center;
+    }
+
+    .hero-kicker {
+      color: var(--gold-light);
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      font-size: .78rem;
+    }
+
+    .hero h1 {
+      margin: 8px 0 10px;
+      color: #edd493;
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: clamp(2.15rem, 5vw, 4rem);
+      line-height: 1;
+    }
+
+    .hero p {
+      margin: 0 auto;
+      max-width: 790px;
+      color: #efe4ce;
+      font-size: 1.05rem;
+    }
+
+    .progress-strip {
+      max-width: 980px;
+      margin: 26px auto 0;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(221,185,111,.35);
+      border-radius: 10px;
+      padding: 13px 16px;
+    }
+
+    .progress-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: #f4e3bd;
+      font-size: .9rem;
+      margin-bottom: 8px;
+    }
+
+    .progress-track {
+      height: 9px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255,255,255,.13);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #a97024, #edca77);
+      transition: width .3s ease;
+    }
+
+    .app {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 28px 20px 50px;
+      display: grid;
+      grid-template-columns: 310px minmax(0, 1fr);
+      gap: 26px;
+      align-items: start;
+    }
+
+    .lesson-nav {
+      position: sticky;
+      top: 98px;
+      background: #18120e;
+      color: #f4ead5;
+      border: 1px solid rgba(200,155,69,.52);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .lesson-nav-head {
+      background: linear-gradient(90deg, #3f0b0f, #250709);
+      padding: 18px 18px 14px;
+      border-bottom: 1px solid rgba(200,155,69,.35);
+    }
+
+    .lesson-nav-head h2 {
+      margin: 0;
+      color: #edcd80;
+      font-weight: 500;
+      font-size: 1.25rem;
+    }
+
+    .lesson-nav-head p {
+      margin: 5px 0 0;
+      color: #d8c8ab;
+      font-size: .84rem;
+    }
+
+    .lesson-list {
+      padding: 8px;
+      max-height: calc(100vh - 205px);
+      overflow-y: auto;
+    }
+
+    .lesson-button {
+      width: 100%;
+      text-align: left;
+      border: 1px solid transparent;
+      background: transparent;
+      color: #eee2cc;
+      padding: 11px 12px;
+      margin: 3px 0;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: .18s ease;
+    }
+
+    .lesson-button:hover {
+      background: rgba(255,255,255,.06);
+      border-color: rgba(200,155,69,.22);
+    }
+
+    .lesson-button.active {
+      background: linear-gradient(90deg, rgba(94,22,25,.92), rgba(62,17,18,.92));
+      border-color: rgba(223,180,91,.62);
+      color: #fff3d5;
+    }
+
+    .lesson-button.complete::after {
+      content: " ✓";
+      color: #e2bf68;
+      float: right;
+      font-weight: bold;
+    }
+
+    .lesson-num {
+      display: block;
+      color: #cfaa58;
+      font-size: .72rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    .lesson-label {
+      display: block;
+      line-height: 1.25;
+      font-size: .94rem;
+    }
+
+    .content-panel {
+      min-width: 0;
+    }
+
+    .lesson-card {
+      background: rgba(255, 251, 242, .98);
+      border: 1px solid rgba(145, 99, 31, .28);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .lesson-heading {
+      padding: 30px 32px 24px;
+      color: white;
+      background:
+        radial-gradient(circle at right top, rgba(217,167,75,.19), transparent 30%),
+        linear-gradient(135deg, #421014, #1c0a09);
+      border-bottom: 1px solid var(--gold);
+    }
+
+    .lesson-heading .small {
+      color: #ddb969;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      font-size: .75rem;
+    }
+
+    .lesson-heading h2 {
+      margin: 5px 0 3px;
+      color: #f0d28d;
+      font-size: clamp(1.85rem, 4vw, 3rem);
+      line-height: 1.05;
+      font-weight: 500;
+    }
+
+    .lesson-heading .subtitle {
+      margin: 0;
+      color: #f3e7ce;
+      font-size: 1.02rem;
+    }
+
+    .lesson-body {
+      padding: 30px 32px 34px;
+    }
+
+    .section-block {
+      margin-bottom: 30px;
+    }
+
+    .section-block:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-block h3 {
+      color: #551319;
+      margin: 0 0 10px;
+      font-size: 1.35rem;
+      font-weight: 500;
+      border-bottom: 1px solid rgba(158,111,37,.23);
+      padding-bottom: 6px;
+    }
+
+    .section-block p {
+      margin: 9px 0;
+    }
+
+    .scripture-box {
+      background: #f4e8cb;
+      border-left: 5px solid #af7c27;
+      padding: 18px 20px;
+      margin: 18px 0;
+      border-radius: 6px;
+    }
+
+    .scripture-box strong {
+      color: #60181c;
+    }
+
+    .truth-box {
+      background: #f8f2df;
+      border: 1px solid #d2b16a;
+      border-radius: 9px;
+      padding: 18px 20px;
+      margin: 18px 0;
+    }
+
+    .truth-box h4 {
+      margin: 0 0 7px;
+      color: #4e1115;
+      font-size: 1.08rem;
+    }
+
+    .points {
+      margin: 10px 0 0;
+      padding-left: 22px;
+    }
+
+    .points li {
+      margin: 7px 0;
+    }
+
+    .reflection {
+      background: #252f22;
+      color: #f4ecd9;
+      border: 1px solid #b29151;
+      border-radius: 9px;
+      padding: 20px;
+    }
+
+    .reflection h3 {
+      color: #efd18b;
+      border: 0;
+      padding: 0;
+    }
+
+    .lesson-actions {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 12px;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .nav-action,
+    .complete-action {
+      border: 1px solid #8e6322;
+      border-radius: 7px;
+      padding: 11px 15px;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .nav-action {
+      background: #fff8e8;
+      color: #4b1916;
+    }
+
+    .nav-action:hover:not(:disabled) {
+      background: #f4e6c4;
+    }
+
+    .nav-action:disabled {
+      opacity: .38;
+      cursor: default;
+    }
+
+    #nextButton {
+      justify-self: end;
+    }
+
+    .complete-action {
+      background: linear-gradient(180deg, #d5ad58, #ad7625);
+      color: #261405;
+      font-weight: bold;
+    }
+
+    .complete-action.completed {
+      background: #32472f;
+      color: #fff3d5;
+      border-color: #7f9c71;
+    }
+
+    .course-complete {
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+      text-align: center;
+      border-radius: 10px;
+      background: #3e0f13;
+      color: #f6e9ce;
+      border: 1px solid var(--gold);
+    }
+
+    .course-complete h3 {
+      margin: 0 0 4px;
+      color: #f0ce7d;
+    }
+
+    footer {
+      background: #17120e;
+      color: #d9cab0;
+      text-align: center;
+      padding: 24px 18px;
+      border-top: 1px solid var(--gold);
+    }
+
+    @media (max-width: 900px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+
+      .lesson-nav {
+        position: static;
+      }
+
+      .lesson-list {
+        max-height: none;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 4px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .topbar-inner {
+        grid-template-columns: 1fr auto;
+      }
+
+      .top-title {
+        display: none;
+      }
+
+      .hero-inner {
+        padding: 38px 16px;
+      }
+
+      .app {
+        padding: 18px 12px 36px;
+      }
+
+      .lesson-list {
+        grid-template-columns: 1fr;
+      }
+
+      .lesson-heading,
+      .lesson-body {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .lesson-actions {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .complete-action {
+        grid-column: 1 / -1;
+        grid-row: 1;
+      }
+
+      #nextButton {
+        justify-self: stretch;
+      }
+
+      .nav-action {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="home-link" href="index.html">← Main Page</a>
+
+      <div class="top-title">
+        Seven Redemptive Names of God<br>
+        <span style="color:#dcb86a;font-size:.78rem;">Teaching Course</span>
+      </div>
+
+      <button class="account-placeholder" type="button" title="Account features will be added later">
+        Account
+      </button>
+    </div>
+  </header>
+
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-kicker">Biblical Foundation • Redemption • Standing in Truth</div>
+
+      <h1>Seven Redemptive Names of God</h1>
+
+      <p>
+        Before studying the seven redemptive names, we first establish the
+        biblical foundation: why God made humanity, what happened through the Fall,
+        and why redemption is necessary. Then we walk through each name and the
+        truth it reveals about God's character and provision.
+      </p>
+
+      <div class="progress-strip">
+        <div class="progress-row">
+          <span id="progressText">0 of 9 lessons completed</span>
+          <span id="progressPercent">0%</span>
+        </div>
+
+        <div class="progress-track" aria-label="Course progress">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <main class="app">
+
+    <aside class="lesson-nav">
+      <div class="lesson-nav-head">
+        <h2>Course Lessons</h2>
+        <p>Select any lesson. Your completed lessons are saved on this device.</p>
+      </div>
+
+      <div class="lesson-list" id="lessonList"></div>
+    </aside>
+
+
+    <section class="content-panel">
+
+      <article class="lesson-card">
+
+        <div class="lesson-heading">
+          <div class="small" id="lessonNumber"></div>
+          <h2 id="lessonTitle"></h2>
+          <p class="subtitle" id="lessonSubtitle"></p>
+        </div>
+
+        <div class="lesson-body" id="lessonBody"></div>
+
+      </article>
+
+
+      <div class="lesson-actions">
+        <button class="nav-action" id="prevButton" type="button">← Previous Lesson</button>
+
+        <button class="complete-action" id="completeButton" type="button">
+          Mark Lesson Complete
+        </button>
+
+        <button class="nav-action" id="nextButton" type="button">Next Lesson →</button>
+      </div>
+
+      <div class="course-complete" id="courseComplete">
+        <h3>Course Completed</h3>
+        <p>
+          You have worked through the biblical foundation and all seven
+          redemptive names of God.
+        </p>
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <footer>
+    Seven Redemptive Names of God • Know Who God Is. Know What He Has Provided. Stand in His Truth.
+  </footer>
+
+
+<script>
+  const lessons = [
+    {
+      title: "Why God Made Humanity",
+      subtitle: "God's plan and purpose for mankind",
+      scripture: "Genesis 1:26–27",
+      body: `
+        <section class="section-block">
+          <h3>Begin with God's Original Purpose</h3>
+
+          <p>
+            To understand redemption, we first need to understand God's original
+            purpose for humanity. Redemption restores what sin disrupted.
+          </p>
+
+          <div class="scripture-box">
+            <strong>Genesis 1:26–27</strong><br>
+            “And God said, Let us make man in our image, after our likeness:
+            and let them have dominion over the fish of the sea, and over the
+            fowl of the air, and over the cattle, and over all the earth,
+            and over every creeping thing that creepeth upon the earth.
+            So God created man in his own image, in the image of God created
+            he him; male and female created he them.”
+          </div>
+
+          <p>
+            Humanity was not an accident. God deliberately created mankind in
+            His image and likeness. These verses establish dignity, purpose,
+            relationship, and responsibility.
+          </p>
+        </section>
+
+        <section class="section-block">
+          <h3>What This Foundation Shows Us</h3>
+
+          <ul class="points">
+            <li>God created humanity intentionally.</li>
+            <li>Human beings were made in the image of God.</li>
+            <li>God gave humanity responsibility and authority within His creation.</li>
+            <li>God's plan began with relationship, purpose, and life—not sin and defeat.</li>
+          </ul>
+
+          <div class="truth-box">
+            <h4>Foundation Truth</h4>
+            <p>
+              We cannot fully understand what God redeems us from until we first
+              see what He created us for.
+            </p>
+          </div>
+        </section>
+
+        <section class="section-block reflection">
+          <h3>Think About It</h3>
+          <p>
+            When you see yourself first through Genesis 1:26–27 rather than through
+            failure, fear, or past mistakes, how does that change the way you
+            understand God's purpose for your life?
+          </p>
+        </section>
+      `
+    },
+
+    {
+      title: "The Fall of Man",
+      subtitle: "What happened in Genesis 3 and why redemption became necessary",
+      scripture: "Genesis 3",
+      body: `
+        <section class="section-block">
+          <h3>Read Genesis Chapter 3 as One Story</h3>
+
+          <p>
+            Genesis 3 shows the entrance of temptation, deception, disobedience,
+            shame, fear, broken fellowship, and the consequences of sin.
+            The entire chapter matters because it shows both the seriousness of
+            the Fall and God's response to fallen humanity.
+          </p>
+
+          <div class="scripture-box">
+            <strong>Key movement in Genesis 3</strong><br>
+            The serpent questions God's Word. The woman and the man disobey.
+            Their eyes are opened to shame. They hide from God. God seeks them,
+            confronts the sin, explains the consequences, and gives the first
+            promise pointing toward the defeat of the serpent.
+          </div>
+        </section>
+
+        <section class="section-block">
+          <h3>The Enemy's Pattern</h3>
+
+          <p>
+            The serpent's attack begins by challenging what God said.
+            That pattern matters throughout Scripture: deception attempts to
+            weaken trust in God's Word before drawing a person into disobedience.
+          </p>
+
+          <ul class="points">
+            <li>Question God's Word.</li>
+            <li>Distort God's character.</li>
+            <li>Present disobedience as beneficial.</li>
+            <li>Produce shame, fear, and separation after sin.</li>
+          </ul>
+        </section>
+
+        <section class="section-block">
+          <h3>God Did Not Abandon His Purpose</h3>
+
+          <p>
+            Sin brought terrible consequences, but Genesis 3 does not end with
+            God abandoning humanity. Even in judgment, the chapter points ahead
+            to God's redemptive plan.
+          </p>
+
+          <div class="truth-box">
+            <h4>Why This Matters for the Seven Names</h4>
+            <p>
+              The redemptive names become meaningful against this background.
+              Humanity needs righteousness, peace, shepherding, healing,
+              provision, God's presence, and victory.
+            </p>
+          </div>
+        </section>
+
+        <section class="section-block reflection">
+          <h3>Think About It</h3>
+          <p>
+            What does Genesis 3 teach you about the importance of knowing what
+            God has actually said rather than judging truth by feelings,
+            temptation, or circumstances?
+          </p>
+        </section>
+      `
+    },
+
+    {
+      title: "Jehovah-Tsidkenu",
+      subtitle: "The Lord Our Righteousness",
+      scripture: "Jeremiah 23:5–6",
+      body: `
+        <section class="section-block">
+          <h3>The Lord Our Righteousness</h3>
+
+          <div class="scripture-box">
+            <strong>Jeremiah 23:5–6</strong><br>
+            Jeremiah prophesies of a righteous Branch from David's line who
+            will reign as King, and declares the name:
+            “THE LORD OUR RIGHTEOUSNESS.”
+          </div>
+
+          <p>
+            The name Jehovah-Tsidkenu directs our attention away from confidence
+            in our own goodness and toward the righteousness God provides.
+            Fallen humanity cannot repair the problem of sin simply by trying harder.
+          </p>
+        </section>
+
+        <section class="section-block">
+          <h3>Redemption Begins with Right Standing</h3>
+
+          <p>
+            The gospel announces that righteousness is found in Christ.
+            Our standing before God is not built upon boasting in human performance.
+          </p>
+
+          <ul class="points">
+            <li>God is perfectly righteous.</li>
+            <li>Sin leaves mankind unable to establish righteousness by self-effort.</li>
+            <li>Jesus fulfilled righteousness and dealt with sin.</li>
+            <li>Faith rests in what God has provided rather than self-righteousness.</li>
+          </ul>
+
+          <div class="truth-box">
+            <h4>Stand in This Truth</h4>
+            <p>
+              When condemnation tries to define you only by past failure,
+              return to what God has provided in Christ. Do not make sin light,
+              but do not make your own ability greater than God's redemption.
+            </p>
+          </div>
+        </section>
+
+        <section class="section-block reflection">
+          <h3>Apply It</h3>
+          <p>
+            Are you trying to earn from God what He calls you to receive by faith?
+            Where do you need to stop trusting in your own record and begin
+            trusting in the righteousness God provides?
+          </p>
+        </section>
+      `
+    },
+
+    {
+      title: "Jehovah-Shalom",
+      subtitle: "The Lord Our Peace",
+      scripture: "Judges 6:22–24",
+      body: `
+        <section class="section-block">
+          <h3>The Lord Is Peace</h3>
+
+          <div class="scripture-box">
+            <strong>Judges 6:22–24</strong><br>
+            After Gideon realizes he has encountered the angel of the Lord,
+            the Lord tells him, “Peace be unto thee; fear not.”
+            Gideon builds an altar and calls it Jehovah-shalom.
+          </div>
+
+          <p>
+            Gideon's circumstances were not peaceful. Israel was oppressed,
+            Gideon was fearful, and conflict still lay ahead. Yet God revealed
+            Himself as peace before the outward battle had been resolved.
+          </p>
+        </section>
+
+        <section class="section-block">
+          <h3>Peace Is Rooted in God</h3>
+
+          <ul class="points">
+            <li>Biblical peace is more than pleasant circumstances.</li>
+            <li>God's presence gives a foundation for peace in the middle of conflict.</li>
+            <li>Fear does not have to become the ruler of our decisions.</li>
+            <li>Peace grows as we trust God's character and Word.</li>
+          </ul>
+
+          <div class="truth-box">
+            <h4>Stand in This Truth</h4>
+            <p>
+              Do not wait for every circumstance to become easy before believing
+              God can give peace. Gideon received God's word of peace while the
+              larger battle was still ahead.
+            </p>
+          </div>
+        </section>
+
+        <section class="section-block reflection">
+          <h3>Apply It</h3>
+          <p>
+            What situation is currently trying to control you through fear?
+            What changes when your first response is to remember that the Lord
+            Himself is your peace?
+          </p>
+        </section>
+      `
+    },
+
+    {
+      title: "Jehovah-Raah / Rohi",
+      subtitle: "The Lord Our Shepherd",
+      scripture: "Psalm 23:1",
+      body: `
+        <section class="section-block">
+          <h3>The Lord Is My Shepherd</h3>
+
+          <div class="scripture-box">
+            <strong>Psalm 23:1</strong><br>
+            “The LORD is my shepherd; I shall not want.”
+          </div>
+
+          <p>
+            A shepherd leads, feeds, protects, watches, corrects, and cares for
+            the sheep. Psalm 23 does not present God as distant. It presents Him
+            as personally involved in leading His people.
+          </p>
+        </section>
+
+        <section class="section-block">
+          <h3>What the Shepherd Does</h3>
+
+          <ul class="points">
+            <li>He leads rather than abandons.</li>
+            <li>He provides what is truly needed.</li>
+            <li>He restores the soul.</li>
+            <li>He guides in right paths.</li>
+            <li>His presence gives courage in dark valleys.</li>
+          </ul>
+
+          <div class="truth-box">
+            <h4>Stand in This Truth</h4>
+            <p>
+              You do not have to know every turn in the path to follow the Shepherd.
+              Your responsibility is to hear, trust, and follow Him.
+            </p>
+          </div>
+        </section>
+
+        <section class="section-block reflection">
+          <h3>Apply It</h3>
+          <p>
+            Where are you trying to lead yourself without seeking God's direction?
+            What would following the Shepherd look like in that area?
+          </p>
+        </section>
+      `
+    },
+
+    {
+      title: "Jehovah-Rapha",
+      subtitle: "The Lord Our Healer",
+      scripture: "Exodus 15:22–26",
+      body: `
+        <section class="section-block">
+          <h3>The Lord Who Heals</h3>
+
+          <div class="scripture-box">
+            <strong>Exodus 15:22–26</strong><br>
+            At Marah, Israel finds bitter water. God shows Moses what to do,
+            the water is made sweet, and the Lord reveals Himself as
+            “the LORD that healeth thee.”
+          </div>
+
+          <p>
+            Jehovah-Rapha reveals God as healer and restorer. The biblical theme
+            of healing includes God's concern for brokenness and His power to restore.
+            In the ministry of Jesus, compassion and healing repeatedly appear together.
+          </p>
+        </section>
+
+        <section class="section-block">
+          <h3>Look to God in Broken Places</h3>
+
+          <ul class="points">
+            <li>God is not indifferent to suffering.</li>
+            <li>Healing is consistent with His revealed compassion.</li>
+            <li>We bring sickness and brokenness to Him in faith and prayer.</li>
+            <li>We keep our confidence in God rather than making circumstances our final authority.</li>
+          </ul>
+
+          <div class="truth-box">
+            <h4>Stand in This Truth</h4>
+            <p>
+              Bring the broken area to God. Pray, trust Him, receive appropriate
+              help when needed, and keep your heart anchored in His character
+              rather than surrendering to hopelessness.
+            </p>
+          </div>
+        </section>
+
+        <section class="section-block reflection">
+          <h3>Apply It</h3>
+          <p>
+            Is there an area of your life where pain has caused you to expect
+            nothing but defeat? Bring that area honestly before Jehovah-Rapha.
+          </p>
+        </section>
+      `
+    },
+
+    {
+      title: "Jehovah-Jireh",
+      subtitle: "The Lord Our Provider",
+      scripture: "Genesis 22:1–14",
+      body: `
+        <section class="section-block">
+          <h3>The Lord Will Provide</h3>
+
+          <div class="scripture-box">
+            <strong>Genesis 22:1–14</strong><br>
+            Abraham is tested concerning Isaac. God provides a ram caught in
+            the thicket, and Abraham calls the place Jehovah-jireh:
+            “In the mount of the LORD it shall be seen.”
+          </div>
+
+          <p>
+            God's provision appears in the middle of obedience and trust.
+            Abraham did not know beforehand exactly how God would act,
+            but he continued forward believing God.
+          </p>
+        </section>
+
+        <section class="section-block">
+          <h3>Provision and Trust</h3>
+
+          <ul class="points">
+            <li>God sees the need before we understand the answer.</li>
+            <li>His provision may not arrive in the form we expected.</li>
+            <li>Faith obeys while trusting God's character.</li>
+            <li>God's greatest provision is ultimately seen in His redemptive work.</li>
+          </ul>
+
+          <div class="truth-box">
+            <h4>Stand in This Truth</h4>
+            <p>
+              Need does not mean God has stopped seeing you. Refuse panic as your
+              master. Seek God's wisdom, obey what He shows you, and trust Him
+              as your provider.
+            </p>
+          </div>
+        </section>
+
+        <section class="section-block reflection">
+          <h3>Apply It</h3>
+          <p>
+            What need is tempting you to panic? What faithful step can you take
+            today while trusting Jehovah-Jireh?
+          </p>
+        </section>
+      `
+    },
+
+    {
+      title: "Jehovah-Shammah",
+      subtitle: "The Lord Is There",
+      scripture: "Ezekiel 48:35",
+      body: `
+        <section class="section-block">
+          <h3>The Lord Is There</h3>
+
+          <div class="scripture-box">
+            <strong>Ezekiel 48:35</strong><br>
+            Ezekiel's vision closes with the name of the city:
+            “The LORD is there.”
+          </div>
+
+          <p>
+            Scripture repeatedly shows that God's presence is central to His
+            relationship with His people. The hope is not merely receiving things
+            from God. The greater reality is God Himself being with His people.
+          </p>
+        </section>
+
+        <section class="section-block">
+          <h3>His Presence Changes the Battle</h3>
+
+          <ul class="points">
+            <li>You are not abandoned simply because a situation feels lonely.</li>
+            <li>God's presence is greater than emotional awareness of His presence.</li>
+            <li>His Word gives us truth to stand on when feelings change.</li>
+            <li>Relationship with God is at the center of redemption.</li>
+          </ul>
+
+          <div class="truth-box">
+            <h4>Stand in This Truth</h4>
+            <p>
+              Feelings can say, “God is far away.” Faith answers by returning to
+              what God has revealed. Do not build your theology from a difficult day.
+            </p>
+          </div>
+        </section>
+
+        <section class="section-block reflection">
+          <h3>Apply It</h3>
+          <p>
+            In what situation do you most need to remember, “The Lord is there”?
+          </p>
+        </section>
+      `
+    },
+
+    {
+      title: "Jehovah-Nissi",
+      subtitle: "The Lord Our Banner",
+      scripture: "Exodus 17:8–16",
+      body: `
+        <section class="section-block">
+          <h3>The Lord Our Banner</h3>
+
+          <div class="scripture-box">
+            <strong>Exodus 17:8–16</strong><br>
+            After Israel's battle with Amalek, Moses builds an altar and calls
+            its name Jehovah-nissi: “The LORD is my banner.”
+          </div>
+
+          <p>
+            In the ancient world a banner identified the people gathered beneath it
+            and represented the cause under which they fought. Jehovah-Nissi points
+            us to God as the One under whose authority and victory His people stand.
+          </p>
+        </section>
+
+        <section class="section-block">
+          <h3>Victory Is Not Self-Exaltation</h3>
+
+          <p>
+            This name does not teach self-confidence apart from God.
+            It teaches dependence upon Him. In Exodus 17, Israel fought,
+            but the account makes clear that victory depended upon God.
+          </p>
+
+          <ul class="points">
+            <li>God is the source of victory.</li>
+            <li>Prayer and dependence matter in battle.</li>
+            <li>We stand under God's authority rather than our own pride.</li>
+            <li>Our confidence is in the Lord, not merely in our own strength.</li>
+          </ul>
+
+          <div class="truth-box">
+            <h4>Stand in This Truth</h4>
+            <p>
+              When the battle becomes intense, remember whose banner you stand under.
+              You are not called to defeat darkness through human strength alone.
+            </p>
+          </div>
+        </section>
+
+        <section class="section-block reflection">
+          <h3>Course Reflection</h3>
+          <p>
+            Look back over all seven names. Which revealed truth do you most need
+            to actively stand on right now: righteousness, peace, shepherding,
+            healing, provision, God's presence, or victory?
+          </p>
+        </section>
+      `
+    }
+  ];
+
+
+  const STORAGE_KEY = "seven_redemptive_names_progress_v1";
+
+  let currentLesson = 0;
+  let completedLessons = loadProgress();
+
+
+  const lessonList = document.getElementById("lessonList");
+  const lessonNumber = document.getElementById("lessonNumber");
+  const lessonTitle = document.getElementById("lessonTitle");
+  const lessonSubtitle = document.getElementById("lessonSubtitle");
+  const lessonBody = document.getElementById("lessonBody");
+
+  const prevButton = document.getElementById("prevButton");
+  const nextButton = document.getElementById("nextButton");
+  const completeButton = document.getElementById("completeButton");
+
+  const progressText = document.getElementById("progressText");
+  const progressPercent = document.getElementById("progressPercent");
+  const progressFill = document.getElementById("progressFill");
+  const courseComplete = document.getElementById("courseComplete");
+
+
+  function loadProgress() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+      return Array.isArray(saved) ? saved : [];
+    } catch (error) {
+      return [];
+    }
+  }
+
+
+  function saveProgress() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(completedLessons));
+  }
+
+
+  function renderLessonList() {
+    lessonList.innerHTML = "";
+
+    lessons.forEach((lesson, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "lesson-button";
+
+      if (index === currentLesson) {
+        button.classList.add("active");
+      }
+
+      if (completedLessons.includes(index)) {
+        button.classList.add("complete");
+      }
+
+      button.innerHTML = `
+        <span class="lesson-num">Lesson ${index + 1}</span>
+        <span class="lesson-label">${lesson.title}</span>
+      `;
+
+      button.addEventListener("click", () => {
+        currentLesson = index;
+        renderCurrentLesson();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      lessonList.appendChild(button);
+    });
+  }
+
+
+  function renderCurrentLesson() {
+    const lesson = lessons[currentLesson];
+
+    lessonNumber.textContent = `Lesson ${currentLesson + 1} of ${lessons.length} • ${lesson.scripture}`;
+    lessonTitle.textContent = lesson.title;
+    lessonSubtitle.textContent = lesson.subtitle;
+    lessonBody.innerHTML = lesson.body;
+
+    prevButton.disabled = currentLesson === 0;
+    nextButton.disabled = currentLesson === lessons.length - 1;
+
+    if (completedLessons.includes(currentLesson)) {
+      completeButton.textContent = "✓ Lesson Completed";
+      completeButton.classList.add("completed");
+    } else {
+      completeButton.textContent = "Mark Lesson Complete";
+      completeButton.classList.remove("completed");
+    }
+
+    renderLessonList();
+    updateProgress();
+  }
+
+
+  function updateProgress() {
+    const completedCount = completedLessons.length;
+    const percent = Math.round((completedCount / lessons.length) * 100);
+
+    progressText.textContent = `${completedCount} of ${lessons.length} lessons completed`;
+    progressPercent.textContent = `${percent}%`;
+    progressFill.style.width = `${percent}%`;
+
+    courseComplete.style.display =
+      completedCount === lessons.length ? "block" : "none";
+  }
+
+
+  completeButton.addEventListener("click", () => {
+    const position = completedLessons.indexOf(currentLesson);
+
+    if (position === -1) {
+      completedLessons.push(currentLesson);
+      completedLessons.sort((a, b) => a - b);
+    } else {
+      completedLessons.splice(position, 1);
+    }
+
+    saveProgress();
+    renderCurrentLesson();
+  });
+
+
+  prevButton.addEventListener("click", () => {
+    if (currentLesson > 0) {
+      currentLesson--;
+      renderCurrentLesson();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  });
+
+
+  nextButton.addEventListener("click", () => {
+    if (currentLesson < lessons.length - 1) {
+      currentLesson++;
+      renderCurrentLesson();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  });
+
+
+  renderCurrentLesson();
+</script>
+
+</body>
+</html>
