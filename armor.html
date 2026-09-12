@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Whole Armor of God - Teaching</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    :root {
+      --burgundy: #4a0d12;
+      --burgundy-dark: #210709;
+      --black: #0b0907;
+      --charcoal: #17130f;
+      --cream: #f2e5cb;
+      --cream-light: #fff9ec;
+      --gold: #c89b45;
+      --gold-light: #e4c379;
+      --gold-dark: #8f6623;
+      --ink: #321a18;
+      --muted: #6d5c4c;
+      --green: #243823;
+      --line: rgba(166, 118, 43, 0.35);
+      --shadow: 0 14px 38px rgba(0, 0, 0, 0.22);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--ink);
+      background:
+        linear-gradient(rgba(244, 235, 215, 0.97), rgba(244, 235, 215, 0.97)),
+        repeating-linear-gradient(
+          45deg,
+          rgba(88, 61, 24, 0.04) 0,
+          rgba(88, 61, 24, 0.04) 1px,
+          transparent 1px,
+          transparent 4px
+        );
+      line-height: 1.7;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: linear-gradient(90deg, #4a0d12, #220709);
+      color: #f6ead1;
+      border-bottom: 1px solid var(--gold);
+      box-shadow: 0 5px 18px rgba(0,0,0,.18);
+    }
+
+    .topbar-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      min-height: 72px;
+      padding: 10px 20px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .home-link {
+      color: #f0cf82;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: .95rem;
+    }
+
+    .top-title {
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      line-height: 1.12;
+      font-size: 1.05rem;
+    }
+
+    .account-placeholder {
+      background: transparent;
+      border: 1px solid #d3a852;
+      color: #f9edd6;
+      border-radius: 6px;
+      padding: 9px 14px;
+      cursor: default;
+    }
+
+    .hero {
+      background:
+        radial-gradient(circle at 75% 25%, rgba(218, 167, 70, .22), transparent 28%),
+        linear-gradient(135deg, #120d09 0%, #2a0c0d 48%, #0a0806 100%);
+      color: white;
+      border-bottom: 1px solid var(--gold);
+    }
+
+    .hero-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 48px 22px;
+      text-align: center;
+    }
+
+    .hero-kicker {
+      color: var(--gold-light);
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      font-size: .78rem;
+    }
+
+    .hero h1 {
+      margin: 8px 0 10px;
+      color: #edd493;
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: clamp(2.15rem, 5vw, 4rem);
+      line-height: 1;
+    }
+
+    .hero p {
+      margin: 0 auto;
+      max-width: 790px;
+      color: #efe4ce;
+      font-size: 1.05rem;
+    }
+
+    .progress-strip {
+      max-width: 980px;
+      margin: 26px auto 0;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(221,185,111,.35);
+      border-radius: 10px;
+      padding: 13px 16px;
+    }
+
+    .progress-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: #f4e3bd;
+      font-size: .9rem;
+      margin-bottom: 8px;
+    }
+
+    .progress-track {
+      height: 9px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255,255,255,.13);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #a97024, #edca77);
+      transition: width .3s ease;
+    }
+
+    .app {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 28px 20px 50px;
+      display: grid;
+      grid-template-columns: 310px minmax(0, 1fr);
+      gap: 26px;
+      align-items: start;
+    }
+
+    .lesson-nav {
+      position: sticky;
+      top: 98px;
+      background: #18120e;
+      color: #f4ead5;
+      border: 1px solid rgba(200,155,69,.52);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .lesson-nav-head {
+      background: linear-gradient(90deg, #3f0b0f, #250709);
+      padding: 18px 18px 14px;
+      border-bottom: 1px solid rgba(200,155,69,.35);
+    }
+
+    .lesson-nav-head h2 {
+      margin: 0;
+      color: #edcd80;
+      font-weight: 500;
+      font-size: 1.25rem;
+    }
+
+    .lesson-nav-head p {
+      margin: 5px 0 0;
+      color: #d8c8ab;
+      font-size: .84rem;
+    }
+
+    .lesson-list {
+      padding: 8px;
+      max-height: calc(100vh - 205px);
+      overflow-y: auto;
+    }
+
+    .lesson-button {
+      width: 100%;
+      text-align: left;
+      border: 1px solid transparent;
+      background: transparent;
+      color: #eee2cc;
+      padding: 11px 12px;
+      margin: 3px 0;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: .18s ease;
+    }
+
+    .lesson-button:hover {
+      background: rgba(255,255,255,.06);
+      border-color: rgba(200,155,69,.22);
+    }
+
+    .lesson-button.active {
+      background: linear-gradient(90deg, rgba(94,22,25,.92), rgba(62,17,18,.92));
+      border-color: rgba(223,180,91,.62);
+      color: #fff3d5;
+    }
+
+    .lesson-button.complete::after {
+      content: " ✓";
+      color: #e2bf68;
+      float: right;
+      font-weight: bold;
+    }
+
+    .lesson-num {
+      display: block;
+      color: #cfaa58;
+      font-size: .72rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    .lesson-label {
+      display: block;
+      line-height: 1.25;
+      font-size: .94rem;
+    }
+
+    .content-panel {
+      min-width: 0;
+    }
+
+    .lesson-card {
+      background: rgba(255, 251, 242, .98);
+      border: 1px solid rgba(145, 99, 31, .28);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .lesson-heading {
+      padding: 30px 32px 24px;
+      color: white;
+      background:
+        radial-gradient(circle at right top, rgba(217,167,75,.19), transparent 30%),
+        linear-gradient(135deg, #421014, #1c0a09);
+      border-bottom: 1px solid var(--gold);
+    }
+
+    .lesson-heading .small {
+      color: #ddb969;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      font-size: .75rem;
+    }
+
+    .lesson-heading h2 {
+      margin: 5px 0 3px;
+      color: #f0d28d;
+      font-size: clamp(1.85rem, 4vw, 3rem);
+      line-height: 1.05;
+      font-weight: 500;
+    }
+
+    .lesson-heading .subtitle {
+      margin: 0;
+      color: #f3e7ce;
+      font-size: 1.02rem;
+    }
+
+    .lesson-body {
+      padding: 30px 32px 34px;
+    }
+
+    .section-block {
+      margin-bottom: 30px;
+    }
+
+    .section-block:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-block h3 {
+      color: #551319;
+      margin: 0 0 10px;
+      font-size: 1.35rem;
+      font-weight: 500;
+      border-bottom: 1px solid rgba(158,111,37,.23);
+      padding-bottom: 6px;
+    }
+
+    .section-block p {
+      margin: 9px 0;
+    }
+
+    .scripture-box {
+      background: #f4e8cb;
+      border-left: 5px solid #af7c27;
+      padding: 18px 20px;
+      margin: 18px 0;
+      border-radius: 6px;
+    }
+
+    .scripture-box strong {
+      color: #60181c;
+    }
+
+    .truth-box {
+      background: #f8f2df;
+      border: 1px solid #d2b16a;
+      border-radius: 9px;
+      padding: 18px 20px;
+      margin: 18px 0;
+    }
+
+    .truth-box h4 {
+      margin: 0 0 7px;
+      color: #4e1115;
+      font-size: 1.08rem;
+    }
+
+    .points {
+      margin: 10px 0 0;
+      padding-left: 22px;
+    }
+
+    .points li {
+      margin: 7px 0;
+    }
+
+    .reflection {
+      background: #252f22;
+      color: #f4ecd9;
+      border: 1px solid #b29151;
+      border-radius: 9px;
+      padding: 20px;
+    }
+
+    .reflection h3 {
+      color: #efd18b;
+      border: 0;
+      padding: 0;
+    }
+
+    .lesson-actions {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 12px;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .nav-action,
+    .complete-action {
+      border: 1px solid #8e6322;
+      border-radius: 7px;
+      padding: 11px 15px;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .nav-action {
+      background: #fff8e8;
+      color: #4b1916;
+    }
+
+    .nav-action:hover:not(:disabled) {
+      background: #f4e6c4;
+    }
+
+    .nav-action:disabled {
+      opacity: .38;
+      cursor: default;
+    }
+
+    #nextButton {
+      justify-self: end;
+    }
+
+    .complete-action {
+      background: linear-gradient(180deg, #d5ad58, #ad7625);
+      color: #261405;
+      font-weight: bold;
+    }
+
+    .complete-action.completed {
+      background: #32472f;
+      color: #fff3d5;
+      border-color: #7f9c71;
+    }
+
+    .course-complete {
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+      text-align: center;
+      border-radius: 10px;
+      background: #3e0f13;
+      color: #f6e9ce;
+      border: 1px solid var(--gold);
+    }
+
+    .course-complete h3 {
+      margin: 0 0 4px;
+      color: #f0ce7d;
+    }
+
+    footer {
+      background: #17120e;
+      color: #d9cab0;
+      text-align: center;
+      padding: 24px 18px;
+      border-top: 1px solid var(--gold);
+    }
+
+    @media (max-width: 900px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+
+      .lesson-nav {
+        position: static;
+      }
+
+      .lesson-list {
+        max-height: none;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 4px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .topbar-inner {
+        grid-template-columns: 1fr auto;
+      }
+
+      .top-title {
+        display: none;
+      }
+
+      .hero-inner {
+        padding: 38px 16px;
+      }
+
+      .app {
+        padding: 18px 12px 36px;
+      }
+
+      .lesson-list {
+        grid-template-columns: 1fr;
+      }
+
+      .lesson-heading,
+      .lesson-body {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .lesson-actions {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .complete-action {
+        grid-column: 1 / -1;
+        grid-row: 1;
+      }
+
+      #nextButton {
+        justify-self: stretch;
+      }
+
+      .nav-action {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="home-link" href="index.html">← Main Page</a>
+
+      <div class="top-title">
+        Whole Armor of God<br>
+        <span style="color:#dcb86a;font-size:.78rem;">Teaching Course</span>
+      </div>
+
+      <button class="account-placeholder" type="button" title="Account features will be added later">
+        Account
+      </button>
+    </div>
+  </header>
+
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-kicker">Strength in the Lord • The Whole Armor • Stand Firm</div>
+
+      <h1>Whole Armor of God</h1>
+
+      <p>
+        Draw strength from the Lord, recognize the spiritual battle, and learn to put on the whole armor of God. Study Ephesians 6:10–18 through ten lessons on truth, righteousness, peace, faith, salvation, God's Word, and prayer.
+      </p>
+
+      <div class="progress-strip">
+        <div class="progress-row">
+          <span id="progressText">0 of 10 lessons completed</span>
+          <span id="progressPercent">0%</span>
+        </div>
+
+        <div class="progress-track" aria-label="Course progress">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <main class="app">
+
+    <aside class="lesson-nav">
+      <div class="lesson-nav-head">
+        <h2>Course Lessons</h2>
+        <p>Select any lesson. Your completed lessons are saved on this device.</p>
+      </div>
+
+      <p id="storageNotice" role="status" hidden style="padding:0 20px;">Your browser could not save progress. Completed lessons will remain marked until you leave this page.</p>
+      <div class="lesson-list" id="lessonList"></div>
+    </aside>
+
+
+    <section class="content-panel">
+
+      <article class="lesson-card">
+
+        <div class="lesson-heading">
+          <div class="small" id="lessonNumber"></div>
+          <h2 id="lessonTitle"></h2>
+          <p class="subtitle" id="lessonSubtitle"></p>
+        </div>
+
+        <div class="lesson-body" id="lessonBody"></div>
+
+      </article>
+
+
+      <div class="lesson-actions">
+        <button class="nav-action" id="prevButton" type="button">← Previous Lesson</button>
+
+        <button class="complete-action" id="completeButton" type="button">
+          Mark Lesson Complete
+        </button>
+
+        <button class="nav-action" id="nextButton" type="button">Next Lesson →</button>
+      </div>
+
+      <div class="course-complete" id="courseComplete">
+        <h3>Course Completed</h3>
+        <p>
+          You have studied the whole armor of God and how to stand firm in His strength. Continue in His Word, prayer, and fellowship as you put these truths into practice.
+        </p>
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <footer>
+    Whole Armor of God • Be Strong in the Lord. Put On the Whole Armor. Stand Firm.
+  </footer>
+
+
+<script>
+  const lessons = [
+  {
+    "body": "<section class=\"section-block\"><h3>God Is with You in the Trial</h3><div class=\"scripture-box\"><strong>Ephesians 6:10 (KJV)</strong><br>“Finally, my brethren, be strong in the Lord, and in the power of his might.”</div>\n<p>In the face of trials, God is always there. Whatever we may be facing, we are not alone. Before Paul describes the armor, he tells us where our strength comes from: the Lord and the power of His might.</p>\n<p>We cannot fight the battle in our own strength or depend only on our own abilities. We need God's strength and His ability. The command is not simply to try harder; it is to be strong in Him.</p>\n<p>For the born-again believer, God's presence is not something that must first be earned in a crisis. His Spirit dwells in us. We draw strength through fellowship with Him: praying, receiving His Word, and depending on Him in daily life.</p></section><section class=\"section-block\"><h3>Know What Jesus Has Accomplished</h3>\n<p>The power is already at work in the believer, but we need to know what we have in Christ. If we do not know what Jesus accomplished for us, we will not know how to stand on it when trials come. Ignorance does not cancel His work; it keeps us from understanding and acting on what He has provided.</p>\n<div class=\"scripture-box\"><strong>Romans 10:17 (KJV)</strong><br>“So then faith cometh by hearing, and hearing by the word of God.”</div>\n<p>Faith to face trials grows as we hear God's Word. Read Ephesians 1:19–20 and Ephesians 3:16–20 alongside this lesson. Paul's prayers direct believers toward knowing God's power and being strengthened by His Spirit.</p>\n<p>Fellowship is more than an emergency request. Make room to know the One who strengthens you. Let His Word shape how you see the trial before the trial tells you how to see God.</p></section><div class=\"truth-box\"><h4>Stand in This Truth</h4><p>I am not alone. My strength comes from the Lord. I will learn what Jesus has accomplished and depend upon His power rather than my ability alone.</p></div><section class=\"section-block reflection\"><h3>Apply It</h3><p>What trial are you facing? Identify one Scripture to study and bring that situation honestly to God in prayer. Ask Him for wisdom about your next faithful step.</p></section>",
+    "scripture": "Ephesians 6:10",
+    "subtitle": "Draw your strength from God",
+    "title": "Be Strong in the Lord"
+  },
+  {
+    "body": "<section class=\"section-block\"><h3>Every Piece Matters</h3><div class=\"scripture-box\"><strong>Ephesians 6:11 (KJV)</strong><br>“Put on the whole armour of God, that ye may be able to stand against the wiles of the devil.”</div>\n<p>We need armor to protect us. We cannot expect to stand against the devil's attacks while remaining unarmed and unprotected. Paul does not tell us to choose a favorite piece; he tells us to put on the whole armor of God.</p>\n<p>Truth, righteousness, the gospel of peace, faith, salvation, and the Word of God belong together. Prayer accompanies our standing. We need everything God has provided rather than relying on one or two truths while neglecting the rest.</p>\n<p>Putting on the armor is a picture of living in God's provision. It is not a physical outfit or a formula that requires perfect words. We receive these truths, trust them, and act on them.</p></section><section class=\"section-block\"><h3>People Are Not Our Enemy</h3><div class=\"scripture-box\"><strong>Ephesians 6:12 (KJV)</strong><br>“For we wrestle not against flesh and blood, but against principalities, against powers, against the rulers of the darkness of this world, against spiritual wickedness in high places.”</div>\n<p>Our fight is not with human beings, although it often seems that way. Spiritual evil may be expressed through human actions, and deception can influence how people think and behave. Paul directs our attention beyond the visible conflict.</p>\n<p>We should not assume that someone who disagrees with us is controlled by a demon. This passage does not instruct us to diagnose people or attack them. It teaches us to recognize spiritual opposition while refusing to make people themselves our enemy.</p>\n<p>Stand against lies and wrongdoing while treating people with love. Forgiveness, wise boundaries, and appropriate accountability can belong together. Recognizing spiritual opposition does not excuse harmful behavior.</p></section><div class=\"truth-box\"><h4>Stand in This Truth</h4><p>I will put on the whole armor and stand against deception. I will not turn the people God calls me to love into my spiritual enemy.</p></div><section class=\"section-block reflection\"><h3>Apply It</h3><p>Which part of God's provision have you neglected? In a difficult relationship, how can you oppose what is wrong without treating the person as the enemy?</p></section>",
+    "scripture": "Ephesians 6:11–12",
+    "subtitle": "Know the protection and recognize the enemy",
+    "title": "Put On the Whole Armor"
+  },
+  {
+    "body": "<section class=\"section-block\"><h3>Prepared for the Difficult Day</h3><div class=\"scripture-box\"><strong>Ephesians 6:13 (KJV)</strong><br>“Wherefore take unto you the whole armour of God, that ye may be able to withstand in the evil day, and having done all, to stand.”</div>\n<p>The armor protects us against the schemes and tricks of the devil. A scheme works through deception: a lie may look convincing, an accusation may feel final, or temptation may promise something good while concealing its consequences.</p>\n<p>We need to stand our ground, firm and immovable in God's Word. Standing means continuing to trust and obey what God has said when pressure tries to move us away from it. It does not mean refusing wise counsel or insisting that every personal opinion is God's truth.</p>\n<p>“Having done all, to stand” calls for perseverance. Keep the whole armor on. Continue in truth, righteousness, peace, faith, salvation, and the Word, even when an immediate change is not visible.</p></section><section class=\"section-block\"><h3>Our Weapons Are Mighty—Use Them</h3><div class=\"scripture-box\"><strong>2 Corinthians 10:4–5 (KJV)</strong><br>“(For the weapons of our warfare are not carnal, but mighty through God to the pulling down of strong holds;) Casting down imaginations, and every high thing that exalteth itself against the knowledge of God, and bringing into captivity every thought to the obedience of Christ;”</div>\n<p>Our weapons are mighty through God. The passage speaks of arguments, proud claims, and thoughts that oppose knowing Him. We do not overcome deception through anger or human force. We bring our thinking under the truth of Christ.</p>\n<p>When a thought contradicts Scripture, do not accept it simply because it feels powerful. Examine it. Read the relevant passage in context. Replace the lie with truth and take the practical step that obedience requires.</p>\n<p>Christ's victory is our foundation. We are not trying to repeat His redeeming work; we stand in what He accomplished. This connects with Jehovah-Nissi, the Lord our Banner.</p></section><div class=\"truth-box\"><h4>Stand in This Truth</h4><p>God has given mighty spiritual weapons. I will use them by trusting His Word, rejecting deception, praying, and obeying Him.</p></div><section class=\"section-block reflection\"><h3>Apply It</h3><p>Write down one lie or temptation you need to resist. What does Scripture actually say? What action would agree with that truth today?</p></section>",
+    "scripture": "Ephesians 6:13",
+    "subtitle": "Be firm in God's Word against the enemy's schemes",
+    "title": "Stand Your Ground"
+  },
+  {
+    "body": "<section class=\"section-block\"><h3>Begin with Truth</h3><div class=\"scripture-box\"><strong>Ephesians 6:14 (KJV)</strong><br>“Stand therefore, having your loins girt about with truth, and having on the breastplate of righteousness;”</div>\n<p>The first piece named is truth. We cannot recognize a lie if we do not know the truth. We will struggle to stand against the devil's tricks if we are unfamiliar with what God has said.</p>\n<p>Truth is not whatever brings a moment of relief or agrees with our preference. God's Word provides the foundation. We need to know it, understand it in context, and allow it to govern our response.</p>\n<div class=\"scripture-box\"><strong>John 8:31–32 (KJV)</strong><br>“Then said Jesus to those Jews which believed on him, If ye continue in my word, then are ye my disciples indeed; And ye shall know the truth, and the truth shall make you free.”</div>\n<p>Jesus connects knowing the truth with continuing in His Word. Freedom is not found in merely possessing a Bible or remembering a phrase. We continue in His teaching and let it correct our thinking.</p></section><section class=\"section-block\"><h3>Wear Truth in Daily Life</h3>\n<p>When accusation says you cannot approach God, return to what Jesus has done. When temptation says disobedience has no consequences, remember what Scripture teaches. When fear tells you that you are abandoned, return to God's promise of His presence.</p>\n<p>Truth also calls us to honesty. We cannot stand firmly in truth while deliberately practicing deception ourselves. Be honest with God, acknowledge where you need correction, and speak truthfully to others in love.</p>\n<p>Learning takes time. Read whole passages, ask what they mean, and seek sound teaching. Do not use isolated verses to defend something the surrounding passage does not say.</p></section><div class=\"truth-box\"><h4>Stand in This Truth</h4><p>I will continue in God's Word. His truth exposes deception, corrects my thinking, and teaches me how to walk in freedom.</p></div><section class=\"section-block reflection\"><h3>Apply It</h3><p>Choose one belief that has been shaping your response to a trial. Does it agree with Scripture? Read a complete passage that helps you examine it.</p></section>",
+    "scripture": "Ephesians 6:14; John 8:31–32",
+    "subtitle": "Know the truth and live by it",
+    "title": "The Belt of Truth"
+  },
+  {
+    "body": "<section class=\"section-block\"><h3>The Lord Our Righteousness</h3><div class=\"scripture-box\"><strong>Ephesians 6:14 (KJV)</strong><br>“Stand therefore, having your loins girt about with truth, and having on the breastplate of righteousness;”</div>\n<p>The next piece is the breastplate of righteousness. This connects directly to Jehovah-Tsidkenu—the Lord Our Righteousness. Through Jesus we have been made righteous and brought into right standing with the Father.</p>\n<div class=\"scripture-box\"><strong>2 Corinthians 5:21 (KJV)</strong><br>“For he hath made him to be sin for us, who knew no sin; that we might be made the righteousness of God in him.”</div>\n<p>Our standing is based on Jesus, not on a claim that we have never failed. When condemnation attacks, we do not defend ourselves by pretending to be perfect. We return to the Savior who dealt with our sin.</p>\n<p>Knowing the truth and knowing our position in Christ gives confidence to resist temptation. We belong to Him. The enemy's accusation does not have greater authority than what God has provided through Jesus.</p></section><section class=\"section-block\"><h3>Draw Near Instead of Drawing Away</h3>\n<p>Your invitation is to come to the Father confidently. Do not let guilt persuade you to hide from Him. If you have sinned, acknowledge it and turn to Him rather than treating yourself as beyond His forgiveness.</p>\n<p>We may withdraw from fellowship through unbelief, shame, or disobedience, but we should not confuse that withdrawal with proof that God has stopped loving us. Read Hebrews 4:16, 1 John 1:9, and Romans 8:38–39.</p>\n<p>Righteousness is also to be expressed in how we live. Our right standing is God's gift; it calls us into a life that agrees with Him. The breastplate is not an excuse for wrongdoing. It gives us confidence to reject sin and walk in obedience.</p></section><div class=\"truth-box\"><h4>Stand in This Truth</h4><p>Jesus has brought me into right standing with the Father. I will draw near to God, resist condemnation, and live in agreement with who I am in Christ.</p></div><section class=\"section-block reflection\"><h3>Apply It</h3><p>Where has shame been keeping you from prayer? Come to the Father honestly. Thank Him for your standing in Christ and respond to any correction He brings through His Word.</p></section>",
+    "scripture": "Ephesians 6:14; 2 Corinthians 5:21",
+    "subtitle": "Stand confidently in your relationship with the Father",
+    "title": "The Breastplate of Righteousness"
+  },
+  {
+    "body": "<section class=\"section-block\"><h3>A Firm Foundation of Peace</h3><div class=\"scripture-box\"><strong>Ephesians 6:15 (KJV)</strong><br>“And your feet shod with the preparation of the gospel of peace;”</div>\n<p>Knowing God's truth and our position in Christ gives us confidence to face trials and temptations. We can have peace knowing that God is with us and that His provision is dependable.</p>\n<p>Paul describes our feet as fitted with the readiness of the gospel of peace. The good news of Jesus gives us a foundation from which to stand and a message we are ready to carry.</p>\n<div class=\"scripture-box\"><strong>Romans 5:1 (KJV)</strong><br>“Therefore being justified by faith, we have peace with God through our Lord Jesus Christ:”</div>\n<p>This connects with Jehovah-Shalom—the Lord Our Peace. Peace begins with reconciliation through Jesus. We do not face the battle as enemies of God trying to persuade Him to help us, but as people invited into fellowship with Him.</p></section><section class=\"section-block\"><h3>Peace in the Middle of Pressure</h3>\n<p>Peace does not require pretending that the trial is easy. It means that the trial does not have to rule our response. We can pray, seek wisdom, and act without surrendering to panic.</p>\n<p>God's weapons are mighty and dependable. That confidence is in Him, not a guarantee that every circumstance will change on our timetable. We continue trusting Him when answers take time.</p>\n<p>The gospel of peace also shapes how we treat people. Since our battle is not against flesh and blood, we do not need to carry hostility into every conversation. Be ready to speak the good news and pursue peace without compromising truth.</p>\n<p>Read John 14:27 and Philippians 4:6–7. Bring your requests to God with thanksgiving and allow His truth to guide your heart and mind.</p></section><div class=\"truth-box\"><h4>Stand in This Truth</h4><p>I have peace with God through Jesus. His presence gives me confidence, and His gospel prepares me to stand and to share His peace with others.</p></div><section class=\"section-block reflection\"><h3>Apply It</h3><p>Where is anxiety rushing your decisions? Pause to pray. What would a truthful, peaceful response look like in that situation?</p></section>",
+    "scripture": "Ephesians 6:15; Romans 5:1",
+    "subtitle": "Be ready to stand and walk in Christ's peace",
+    "title": "The Shoes of the Gospel of Peace"
+  },
+  {
+    "body": "<section class=\"section-block\"><h3>Take Up the Shield</h3><div class=\"scripture-box\"><strong>Ephesians 6:16 (KJV)</strong><br>“Above all, taking the shield of faith, wherewith ye shall be able to quench all the fiery darts of the wicked.”</div>\n<p>Faith is confidence in God and His Word. The shield is taken up when we rely on what He has said rather than allowing an accusation, threat, or temptation to determine what we believe.</p>\n<p>Paul uses the picture of fiery darts. In daily life, an attack may take the form of a lie that fuels fear, a temptation that invites compromise, or an accusation that tries to drive us away from God. The picture calls us to active trust.</p>\n<p>Faith is not confidence in the strength of our feelings. We may feel afraid and still choose to trust God. The shield's foundation is His faithfulness, not our ability to produce a particular emotion.</p></section><section class=\"section-block\"><h3>Answer the Lie with Trust</h3>\n<p>When the thought says, “God has abandoned you,” return to His promise in Hebrews 13:5. When temptation says sin is your only way forward, consider 1 Corinthians 10:13 and take the way of escape. When accusation says you cannot approach Him, return to Hebrews 4:16.</p>\n<p>Read these passages in context. Faith receives what God actually promises; it does not turn personal wishes into promises He has never made.</p>\n<p>Faith also acts. If God calls you to forgive, tell the truth, seek help, or step away from temptation, trust Him enough to obey. Hearing the Word and responding to it belong together.</p>\n<p>Keep the shield with the rest of the armor. Faith trusts the truth, rests in Christ's righteousness, and holds to the hope of salvation. It is not a replacement for them.</p></section><div class=\"truth-box\"><h4>Stand in This Truth</h4><p>I will trust God's character and Word when fear, accusation, or temptation comes. My confidence rests in Him.</p></div><section class=\"section-block reflection\"><h3>Apply It</h3><p>Name one fiery dart you have been accepting as truth. Find a passage that addresses it and identify one action that expresses trust in God.</p></section>",
+    "scripture": "Ephesians 6:16",
+    "subtitle": "Trust God when fiery darts come",
+    "title": "The Shield of Faith"
+  },
+  {
+    "body": "<section class=\"section-block\"><h3>Receive What God Has Provided</h3><div class=\"scripture-box\"><strong>Ephesians 6:17 (KJV)</strong><br>“And take the helmet of salvation, and the sword of the Spirit, which is the word of God:”</div>\n<p>A helmet protects the head. Paul's picture directs us to salvation as part of the protection God supplies. Let what Jesus has done shape your understanding of who you are, where you belong, and the hope before you.</p>\n<p>Salvation is God's gift through Christ. We do not purchase it with impressive behavior or earn it by winning enough spiritual battles. Read Ephesians 2:8–10: salvation is by grace through faith, and the life that follows is to bear the good works God intends.</p>\n<p>When discouragement says your future is hopeless, remember that your story is not limited to what you can see today. Christ's saving work gives a lasting hope.</p></section><section class=\"section-block\"><h3>Protect Your Mind from Hopelessness</h3><div class=\"scripture-box\"><strong>1 Thessalonians 5:8 (KJV)</strong><br>“But let us, who are of the day, be sober, putting on the breastplate of faith and love; and for an helmet, the hope of salvation.”</div>\n<p>This passage explicitly connects the helmet with the hope of salvation. Biblical hope rests in God's faithfulness. It looks toward the fulfillment of what He has promised, rather than surrendering the future to despair.</p>\n<p>Be attentive to what you continually take into your mind. Return to Scripture, remember God's mercy, and seek encouragement from other believers. A repeated accusing thought does not become true simply because it returns often.</p>\n<p>When you need correction, receive it. When you need forgiveness, come to God. Neither correction nor a difficult season requires abandoning the hope you have in Christ.</p>\n<p>The helmet belongs with truth and righteousness: know what God says, rest in Christ's provision, and let salvation shape your thoughts.</p></section><div class=\"truth-box\"><h4>Stand in This Truth</h4><p>My hope is in Jesus and His saving work. I will not allow discouragement to define my identity or my future.</p></div><section class=\"section-block reflection\"><h3>Apply It</h3><p>What hopeless conclusion have you been drawing about your life? Read Ephesians 2:8–10 and 1 Thessalonians 5:8–11. How do they change the way you understand your future?</p></section>",
+    "scripture": "Ephesians 6:17; 1 Thessalonians 5:8",
+    "subtitle": "Guard your thinking with the hope of salvation",
+    "title": "The Helmet of Salvation"
+  },
+  {
+    "body": "<section class=\"section-block\"><h3>God's Word Is Our Sword</h3><div class=\"scripture-box\"><strong>Ephesians 6:17 (KJV)</strong><br>“And take the helmet of salvation, and the sword of the Spirit, which is the word of God:”</div>\n<p>Paul identifies the sword of the Spirit as the Word of God. We are not left without an answer to deception. God has spoken, and His Word gives us truth with which to resist the enemy's lies.</p>\n<p>A Bible that remains closed will not teach us what we need to know. Read it, study it, remember it, and put it into practice. The aim is not to collect quotations but to know God and respond faithfully to Him.</p>\n<p>This returns us to the beginning of the course: faith comes by hearing God's Word. We need to know what Jesus accomplished so that we can stand in it.</p></section><section class=\"section-block\"><h3>Learn from Jesus in Temptation</h3>\n<p>Read Matthew 4:1–11. Jesus responds to temptation with “It is written.” He refuses to let hunger, the desire for a display of power, or an offer of worldly kingdoms move Him from obedience to the Father.</p>\n<p>The account also shows Scripture being quoted in an attempt to tempt Jesus. Merely using biblical words does not make a claim faithful to God. Context matters, and one passage must not be twisted to contradict the wider teaching of Scripture.</p>\n<p>Use the Word by identifying what is true, refusing the lie, and obeying. Speaking Scripture can help direct your attention to truth, but it is not a magic formula. Our confidence is in the God who speaks.</p>\n<p>The sword is not permission to wound people with Bible verses. Speak truth in love. Use Scripture to resist deception, receive correction yourself, and encourage others in Christ.</p></section><div class=\"truth-box\"><h4>Stand in This Truth</h4><p>God has given me His Word. I will learn it in context, speak it faithfully, and obey it when temptation comes.</p></div><section class=\"section-block reflection\"><h3>Apply It</h3><p>Study one of Jesus' answers in Matthew 4. What temptation did it address? Choose a passage to learn this week and identify how you will put it into practice.</p></section>",
+    "scripture": "Ephesians 6:17; Matthew 4:1–11",
+    "subtitle": "Know, speak, and obey the Word of God",
+    "title": "The Sword of the Spirit"
+  },
+  {
+    "body": "<section class=\"section-block\"><h3>Prayer Accompanies the Whole Armor</h3><div class=\"scripture-box\"><strong>Ephesians 6:18 (KJV)</strong><br>“Praying always with all prayer and supplication in the Spirit, and watching thereunto with all perseverance and supplication for all saints;”</div>\n<p>Paul follows the armor with a call to prayer. He does not name prayer as another physical piece here; he describes the ongoing life of dependence in which we stand. We do not put on the armor and then operate independently of God.</p>\n<p>Praying always means maintaining a life of prayer throughout our circumstances. Bring requests, give thanks, confess wrongdoing, and seek wisdom. Fellowship with God is the relationship from which we draw strength.</p>\n<p>Praying in the Spirit means depending on the Holy Spirit and praying in agreement with God's will. Let Scripture shape your prayers rather than simply asking God to approve whatever you have already decided.</p></section><section class=\"section-block\"><h3>Be Watchful and Persevere</h3>\n<p>Watchfulness means remaining attentive. Recognize temptation, notice where your thinking is moving away from truth, and bring needs before God. It does not mean becoming suspicious of every person or interpreting every inconvenience as a spiritual attack.</p>\n<p>Perseverance means continuing in prayer when the answer is not immediate. You do not have to create the strength alone. Return to the Lord, receive encouragement, and keep taking the faithful step He has made clear.</p>\n<p>Paul says to pray for all saints. The battle is not only about our own concerns. Pray for other believers: for strength, wisdom, protection from temptation, and courage to live and speak the gospel.</p></section><section class=\"section-block\"><h3>Keep the Whole Armor On</h3>\n<ul class=\"points\"><li><strong>Truth:</strong> Know and live by what God says.</li><li><strong>Righteousness:</strong> Stand in Christ's provision and walk in obedience.</li><li><strong>Peace:</strong> Be grounded in the gospel and ready to share it.</li><li><strong>Faith:</strong> Trust God against the enemy's lies.</li><li><strong>Salvation:</strong> Guard your thinking with the hope found in Jesus.</li><li><strong>The Word:</strong> Know it, speak it faithfully, and obey.</li><li><strong>Prayer:</strong> Depend on God, remain watchful, and pray for others.</li></ul>\n<p>We began with “Be strong in the Lord.” We end in the same place: trusting Him. Know what He has provided, keep the whole armor on, and stand firm in His Word.</p></section><div class=\"truth-box\"><h4>Stand in This Truth</h4><p>I am not alone. I will remain in fellowship with God, use what He has provided, and keep standing in His truth.</p></div><section class=\"section-block reflection\"><h3>Apply It</h3><p>Pray through the truths of this course. Name one person you will pray for this week and one part of the armor you will give particular attention to in daily life.</p></section>",
+    "scripture": "Ephesians 6:18",
+    "subtitle": "Live in fellowship with God and pray for others",
+    "title": "Pray, Watch, and Keep Standing"
+  }
+];
+
+  const STORAGE_KEY = "whole_armor_of_god_progress_v1";
+
+  let currentLesson = 0;
+  let completedLessons = loadProgress();
+
+
+  const lessonList = document.getElementById("lessonList");
+  const lessonNumber = document.getElementById("lessonNumber");
+  const lessonTitle = document.getElementById("lessonTitle");
+  const lessonSubtitle = document.getElementById("lessonSubtitle");
+  const lessonBody = document.getElementById("lessonBody");
+
+  const prevButton = document.getElementById("prevButton");
+  const nextButton = document.getElementById("nextButton");
+  const completeButton = document.getElementById("completeButton");
+
+  const progressText = document.getElementById("progressText");
+  const progressPercent = document.getElementById("progressPercent");
+  const progressFill = document.getElementById("progressFill");
+  const courseComplete = document.getElementById("courseComplete");
+
+
+  function loadProgress() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+      return Array.isArray(saved) ? [...new Set(saved.filter(index => Number.isInteger(index) && index >= 0 && index < lessons.length))] : [];
+    } catch (error) {
+      return [];
+    }
+  }
+
+
+  function saveProgress() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(completedLessons));
+    } catch (error) {
+      document.getElementById("storageNotice").hidden = false;
+    }
+  }
+
+
+  function renderLessonList() {
+    lessonList.innerHTML = "";
+
+    lessons.forEach((lesson, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "lesson-button";
+
+      if (index === currentLesson) {
+        button.classList.add("active");
+      }
+
+      if (completedLessons.includes(index)) {
+        button.classList.add("complete");
+      }
+
+      button.innerHTML = `
+        <span class="lesson-num">Lesson ${index + 1}</span>
+        <span class="lesson-label">${lesson.title}</span>
+      `;
+
+      button.addEventListener("click", () => {
+        currentLesson = index;
+        renderCurrentLesson();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      lessonList.appendChild(button);
+    });
+  }
+
+
+  function renderCurrentLesson() {
+    const lesson = lessons[currentLesson];
+
+    lessonNumber.textContent = `Lesson ${currentLesson + 1} of ${lessons.length} • ${lesson.scripture}`;
+    lessonTitle.textContent = lesson.title;
+    lessonSubtitle.textContent = lesson.subtitle;
+    lessonBody.innerHTML = lesson.body;
+
+    prevButton.disabled = currentLesson === 0;
+    nextButton.disabled = currentLesson === lessons.length - 1;
+
+    if (completedLessons.includes(currentLesson)) {
+      completeButton.textContent = "✓ Lesson Completed";
+      completeButton.classList.add("completed");
+    } else {
+      completeButton.textContent = "Mark Lesson Complete";
+      completeButton.classList.remove("completed");
+    }
+
+    renderLessonList();
+    updateProgress();
+  }
+
+
+  function updateProgress() {
+    const completedCount = completedLessons.length;
+    const percent = Math.round((completedCount / lessons.length) * 100);
+
+    progressText.textContent = `${completedCount} of ${lessons.length} lessons completed`;
+    progressPercent.textContent = `${percent}%`;
+    progressFill.style.width = `${percent}%`;
+
+    courseComplete.style.display =
+      completedCount === lessons.length ? "block" : "none";
+  }
+
+
+  completeButton.addEventListener("click", () => {
+    const position = completedLessons.indexOf(currentLesson);
+
+    if (position === -1) {
+      completedLessons.push(currentLesson);
+      completedLessons.sort((a, b) => a - b);
+    } else {
+      completedLessons.splice(position, 1);
+    }
+
+    saveProgress();
+    renderCurrentLesson();
+  });
+
+
+  prevButton.addEventListener("click", () => {
+    if (currentLesson > 0) {
+      currentLesson--;
+      renderCurrentLesson();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  });
+
+
+  nextButton.addEventListener("click", () => {
+    if (currentLesson < lessons.length - 1) {
+      currentLesson++;
+      renderCurrentLesson();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  });
+
+
+  renderCurrentLesson();
+</script>
+
+</body>
+</html>
