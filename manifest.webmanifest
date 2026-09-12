@@ -1,1 +1,24 @@
-
+{
+  "name": "Seven Redemptive Names of God",
+  "short_name": "7 Names of God",
+  "description": "Know who God is. Know what He has provided. Stand in His truth.",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#22080a",
+  "theme_color": "#4a0d12",
+  "icons": [
+    {
+      "src": "/app-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/app-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
