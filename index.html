@@ -902,9 +902,26 @@
         return;
       }
 
-      // Show the normal signed-in state immediately.
+      const signedInEmail =
+        String(session.user.email || "")
+          .trim()
+          .toLowerCase();
+
+      // This only controls the header label.
+      // Real admin permissions remain protected by Supabase / RLS.
+      if (
+        signedInEmail ===
+        "bashamcaleb530@gmail.com"
+      ) {
+        setAccountButtonAdmin();
+        return;
+      }
+
+      // Normal signed-in users see My Account.
       setAccountButtonMember();
 
+      // Also check the database role so any future admin account
+      // can receive the same Admin label.
       try {
         const {
           data: profile,
