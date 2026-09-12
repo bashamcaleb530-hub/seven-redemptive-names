@@ -108,7 +108,8 @@
       padding: 10px 18px;
       font-family: inherit;
       font-size: 1rem;
-      cursor: default;
+      cursor: pointer;
+      text-decoration: none;
     }
 
     .account-button::before {
@@ -648,16 +649,9 @@
         <a href="#teaching-areas">Teaching Areas</a>
       </nav>
 
-      <!-- Account is intentionally only visual for now.
-           We will connect it after the rest of the software is complete. -->
-      <button
-        class="account-button"
-        type="button"
-        title="Account features will be added later"
-        aria-label="Account features coming later"
-      >
-        ♟&nbsp; Account
-      </button>
+      <a class="account-button" href="account.html" aria-label="Open account">
+        Account
+      </a>
     </div>
   </header>
 
