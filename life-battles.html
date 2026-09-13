@@ -96,6 +96,7 @@ textarea{width:100%;min-height:145px;padding:13px;border-radius:9px;border:1px s
 .truth{border:1px solid #6d7e50;background:rgba(56,82,48,.14)}
 .lie strong,.truth strong{display:block;margin-bottom:8px;color:var(--gold-light)}
 .prayer{font-style:italic;color:var(--cream-light);font-size:1.06rem}
+.guided-grid{display:grid;gap:14px;margin-top:16px}.guided-card{border:1px solid rgba(200,155,69,.38);background:rgba(0,0,0,.18);border-radius:14px;padding:16px}.guided-card h4{margin:0 0 8px;color:var(--gold-light)}.guided-card textarea{width:100%;min-height:110px;margin-top:10px;background:#0f0d0b;color:var(--cream-light);border:1px solid rgba(200,155,69,.35);border-radius:10px;padding:12px;font:inherit}.seek-note{border-left:4px solid var(--gold);padding:12px 14px;background:rgba(200,155,69,.08);margin:14px 0}.commitment{border:1px solid rgba(224,189,114,.45);background:linear-gradient(135deg,rgba(74,13,18,.65),rgba(23,35,24,.45));border-radius:14px;padding:18px;margin-top:16px}.truth-cycle{font-weight:700;color:var(--gold-light);line-height:1.8}
 .helpbox{border:2px solid #a64749;background:linear-gradient(145deg,#431014,#211011);border-radius:16px;padding:25px}
 .helpbox h3{color:#ffd7b0;font-size:1.55rem;margin:0 0 8px}
 .help-step{border-top:1px solid rgba(255,255,255,.15);padding:16px 0}
@@ -210,7 +211,42 @@ const VERSES = {
   rom81:["Romans 8:1","There is therefore now no condemnation to them which are in Christ Jesus."],
   ps91:["Psalm 91:1, 4","He that dwelleth in the secret place of the most High shall abide under the shadow of the Almighty... He shall cover thee with his feathers, and under his wings shalt thou trust: his truth shall be thy shield and buckler."],
   gen31:["Genesis 3:1","Yea, hath God said..."],
-  rom1017:["Romans 10:17","So then faith cometh by hearing, and hearing by the word of God."]
+  rom1017:["Romans 10:17","So then faith cometh by hearing, and hearing by the word of God."],
+  mark1123:["Mark 11:23","For verily I say unto you, That whosoever shall say unto this mountain, Be thou removed, and be thou cast into the sea; and shall not doubt in his heart, but shall believe that those things which he saith shall come to pass; he shall have whatsoever he saith."],
+  matt1234:["Matthew 12:34","...for out of the abundance of the heart the mouth speaketh."],
+  matt1518:["Matthew 15:18","But those things which proceed out of the mouth come forth from the heart; and they defile the man."],
+  ps344:["Psalm 34:4","I sought the LORD, and he heard me, and delivered me from all my fears."],
+  eph13:["Ephesians 1:3","Blessed be the God and Father of our Lord Jesus Christ, who hath blessed us with all spiritual blessings in heavenly places in Christ:"]
+};
+
+const GUIDED_QUESTIONS = {
+ addiction:["Father, why do I have this desire or need for this addiction?","Father, how did this desire or pattern get into my life?","Father, how is this addiction affecting my life, my thinking, my fellowship, my words, and my actions?","Father, what truth do I need to know, believe, meditate on, speak, and live so I can walk free?"],
+ depression:["Father, why am I feeling depressed?","Father, what is making me feel depressed?","Father, how is this depression affecting my life, my thinking, my words, my relationships, and my fellowship with You?","Father, what truth do I need to know, believe, meditate on, speak, and live as I walk out of this depression?"],
+ anxiety:["Father, why am I feeling anxious or overwhelmed?","Father, what is producing or feeding this anxiety in me?","Father, how is this anxiety affecting my thoughts, words, decisions, relationships, and fellowship with You?","Father, what truth do I need to know, believe, meditate on, speak, and live so anxiety no longer rules me?"],
+ fear:["Father, what am I afraid of?","Father, where did this fear enter, and what am I believing that gives it power in my thinking?","Father, how is this fear affecting my thoughts, words, decisions, relationships, and obedience?","Father, what truth do I need to know, believe, meditate on, speak, and live so I can walk in faith instead of fear?"],
+ temptation:["Father, why does this temptation have such a pull on me?","Father, what lie, desire, habit, or opening is feeding this temptation?","Father, how is giving attention to this temptation affecting my fellowship, thoughts, words, and actions?","Father, what truth do I need to know, believe, meditate on, speak, and obey so I can take the way of escape?"],
+ pornography:["Father, why do I have this desire?","Father, how did this desire get into my life?","Father, how is this desire affecting my life, my thinking, my words, my relationships, and my fellowship with You?","Father, what truth do I need to know, believe, meditate on, speak, and live so I can walk free from this desire?"],
+ alcohol:["Father, why am I turning to alcohol?","Father, how did this dependence, desire, or pattern become established in my life?","Father, how is alcohol affecting my body, thinking, relationships, responsibilities, words, and fellowship with You?","Father, what truth and next faithful steps do I need as I walk in freedom and receive appropriate help?"],
+ drugs:["Father, why am I turning to this substance?","Father, how did this dependence, desire, or pattern become established in my life?","Father, how is this substance affecting my body, thinking, relationships, responsibilities, words, and fellowship with You?","Father, what truth and next faithful steps do I need as I walk in freedom and receive appropriate help?"],
+ unforgiveness:["Father, why am I holding on to this hurt or resentment?","Father, what happened in my heart that allowed this resentment to become established?","Father, how is unforgiveness affecting my thoughts, words, relationships, peace, and fellowship with You?","Father, what truth do I need to believe and live so I can release vengeance, forgive rightly, and walk in freedom?"],
+ shame:["Father, why am I carrying this guilt or shame?","Father, where did this condemnation or belief about myself become established?","Father, how is shame affecting the way I see You, myself, other people, and my willingness to come to You?","Father, what does Your Word say about repentance, righteousness, mercy, and who I am in Christ, and how do I live from that truth?"],
+ loneliness:["Father, why do I feel so alone?","Father, what is feeding this loneliness or making me believe I am abandoned?","Father, how is loneliness affecting my thoughts, words, relationships, choices, and fellowship with You?","Father, what truth do I need to know and what faithful step should I take as I receive Your presence and healthy fellowship?"],
+ grief:["Father, what is happening in my heart as I grieve this loss?","Father, what part of this loss is weighing on me most deeply right now?","Father, how is this grief affecting my thoughts, words, body, relationships, responsibilities, and hope?","Father, what truth, comfort, and next faithful step do I need as I walk with You through this valley?" ]
+};
+
+const PRAYERS = {
+ addiction:"Father, I come to You instead of hiding. Thank You that through Jesus I can come boldly to Your throne of grace for mercy and help. Thank You that Your strength never fails and that You have already provided what I need in Christ. I will not depend on my own willpower; I draw from Your strength through fellowship with You and faith in Your Word. Thank You that You are Jehovah-Nissi, my victory, Jehovah-Tsidkenu, my righteousness, and Jehovah-Shammah, the Lord who is there. As I seek You, show me through Your Word the truth I need. I choose to meditate on it, believe it, speak in agreement with it, act on it, and continue in it until it becomes part of me. Thank You for Your love, mercy, presence, strength, and victory. In Jesus' name, amen.",
+ depression:"Father, I come to You honestly and I thank You that through Jesus I can come boldly for mercy and help. Thank You that You are Jehovah-Rohi, my Shepherd, Jehovah-Rapha, my Healer, Jehovah-Shalom, my peace, and Jehovah-Shammah, the Lord who is there. I will not make my feelings a greater authority than Your Word. As I fellowship with You, show me what I do not understand about this depression and lead me into the truth I need. I choose to meditate on Your truth, believe it, speak in agreement with it, and live it without putting You on my timetable. Thank You that Your presence and strength do not fail. In Jesus' name, amen.",
+ anxiety:"Father, I come to You and thank You that I do not have to carry every tomorrow in my own strength. Thank You for the peace You have already provided through Christ and for the privilege of fellowship with You. As I seek You, show me what is feeding this anxiety and what Your Word says about it. I choose to bring my thinking into agreement with Your truth, meditate on it, believe it, speak it in faith, and act on what You show me. Thank You that You are my peace, my Shepherd, my Provider, and that You are here with me. In Jesus' name, amen.",
+ fear:"Father, I seek You in faith. Thank You that You hear me and that I do not have to understand everything before I come to You. Show me what I am afraid of and what I have believed about it. Thank You that You are Jehovah-Nissi, my victory, Jehovah-Shalom, my peace, Jehovah-Rohi, my Shepherd, and Jehovah-Shammah, the Lord who is there. I choose to continue seeking You, receiving Your truth, meditating on it, believing it, speaking it, and living it until fear no longer governs my life. In Jesus' name, amen.",
+ temptation:"Father, I turn to You instead of trusting my own strength. Thank You that Your strength never fails and that through Christ I can come boldly for mercy and help. Thank You for the way of escape and for Your Word that exposes deception. I choose to remain in fellowship with You, believe what You say, meditate on Your truth, speak in agreement with it, and obey the escape You place before me. Thank You that You are my victory and that I can stand in what You have already provided. In Jesus' name, amen.",
+ pornography:"Father, I come to You instead of hiding. Thank You that through Jesus I can come boldly to Your throne of grace for mercy and help. Thank You, Father, that You have already provided Your strength for me. Your strength never fails. I will not depend upon my own strength or willpower. I draw from Your strength through fellowship with You and through faith in what You have said. Thank You for what You have already provided through redemption and that You have blessed me with all spiritual blessings in heavenly places in Christ. Thank You that You are Jehovah-Nissi, my victory; Jehovah-Tsidkenu, my righteousness; Jehovah-Rohi, my Shepherd; and Jehovah-Shammah, the Lord who is there. As I fellowship with You, show me through Your Word the truth I need to know. I choose to continue in Your Word, meditate on Your truth, believe it, speak in agreement with it, and make it part of how I think and live. I will not allow failure to drive me away from You. I come closer to You and depend upon the strength and victory You have already provided. In Jesus' name, amen.",
+ alcohol:"Father, I come to You in truth and not in hiding. Thank You that Your strength and redemption are already provided in Christ. I refuse to make alcohol my refuge or master. As I fellowship with You, show me the truth I need, expose every lie I have believed, and lead me in sober obedience and wise care. I choose to believe Your Word, meditate on it, speak in agreement with it, and act on the truth You show me. Thank You that You are my victory, my Healer, my Shepherd, and that You are present with me. In Jesus' name, amen.",
+ drugs:"Father, I come to You in truth and not in hiding. Thank You that through Jesus I can come for mercy and help and that Your strength never fails. I refuse to call bondage freedom. As I fellowship with You, expose the lies and wounds connected to this substance and lead me in Your truth, safe help, and faithful obedience. I choose to believe Your Word, meditate on it, speak in agreement with it, and act on what You show me. Thank You for Your healing, presence, shepherding care, and victory. In Jesus' name, amen.",
+ unforgiveness:"Father, I bring this hurt before You. Thank You for the mercy and redemption You have given me through Christ. I do not want bitterness or vengeance to rule my heart. As I fellowship with You, show me what I have believed, what I need to release, and how Your Word calls me to walk. I choose to meditate on Your truth, believe it, speak in agreement with it, forgive as You direct, and use wise boundaries where they are needed. Thank You for Your righteousness, peace, healing, and wisdom. In Jesus' name, amen.",
+ shame:"Father, I come to You instead of hiding. Thank You that through Jesus I can come boldly for mercy and help. Where I have sinned, I confess it and receive the forgiveness and cleansing You have provided. I reject condemnation as my identity. Thank You that Jehovah-Tsidkenu is my righteousness and that my standing with You rests in what Christ has done, not in my ability to punish myself. Show me through Your Word what is true. I choose to believe it, meditate on it, speak it, and live from it. In Jesus' name, amen.",
+ loneliness:"Father, I come into fellowship with You and thank You that I am not abandoned. Thank You that You are Jehovah-Shammah, the Lord who is there, and Jehovah-Rohi, my Shepherd. Show me what is feeding this loneliness and what Your Word says about it. I choose to receive Your presence, meditate on Your truth, believe it, speak in agreement with it, and take the faithful relational steps You show me. Thank You for Your love, presence, and provision. In Jesus' name, amen.",
+ grief:"Father, I bring my grief to You without pretending the loss is small. Thank You that through Jesus I can come for mercy and help and that You remain with me in this valley. Thank You that You are my Shepherd, my Healer, my peace, and the Lord who is there. As I fellowship with You, show me the truth and comfort I need for this part of the journey. I will not put You or my grief on a timetable. I choose to remain in Your Word, believe Your truth, speak in agreement with it, and take the next faithful step You show me. In Jesus' name, amen."
 };
 
 const TOPICS = [
@@ -221,14 +257,14 @@ const TOPICS = [
  truth:"My strength is in the Lord. Through Christ I can come to the Father for mercy and help. A setback is a reason to run to God, not away from Him. As I continue in His Word, know His truth, and walk in fellowship with Him, I learn to live in the freedom and victory He has provided.",
  names:["tsidkenu","shalom","rohi","rapha","jireh","shammah","nissi"],
  armor:["belt","breastplate","shield","sword","prayer"],
- refs:["eph610","john831","heb416","rom81","ps91","cor1013","james47"],
+ refs:["eph610","john831","heb416","rom81","ps91","rom1017","mark1123","matt1234","matt1518","cor1013","james47"],
  path:[
   "Begin with Ephesians 6:10. Stop making your own willpower the foundation. Turn to the Lord and draw strength from the power of His might.",
   "Come to the Father instead of hiding. Jehovah-Tsidkenu points you to the righteousness provided through Christ. Come boldly yet humbly to the throne of grace for mercy and help.",
   "Stay in fellowship with God. Do not let shame, secrecy, or a setback pull you away from the One who helps you. Psalm 91 pictures dwelling in God's presence, trusting under His wings, and His truth becoming a shield.",
   "Expose the lie with the Belt of Truth. Ask what the addiction is promising, then compare that promise with what God has actually said.",
   "Use the Sword of the Spirit. Read the Scriptures that answer this battle, meditate on them, believe them, and make them part of the way you think and live.",
-  "Take the way of escape God provides. Faith acts on truth. Move away from access, leave the trigger, contact support, change the setting, and obey the next step God has placed in front of you.",
+  "Take the way of escape God provides. Faith acts on truth. Move away from access, leave the trigger, and change the setting. Then go to the Father and His Word first. If you still need help or cannot find the biblical answer, reach out to trustworthy support that will point you back to God and His truth.",
   "Continue in the Word. Do not measure freedom only by a perfect streak. If you stumble, return immediately to God, confess, receive mercy, learn from the fall, and keep walking in the victory God has provided."
  ],
  daily:[
@@ -395,14 +431,14 @@ const TOPICS = [
  truth:"Through Christ I can come to the Father for mercy and help. God is the One I should run to in temptation and after a fall. His Word exposes the lie, fellowship with Him strengthens faith, and His truth learned, believed, meditated on, and lived out leads me into freedom.",
  names:["tsidkenu","shalom","rohi","shammah","nissi"],
  armor:["belt","breastplate","shield","sword","prayer"],
- refs:["eph610","heb416","rom81","john19","ps91","john831","cor1013"],
+ refs:["eph610","heb416","rom81","john19","ps91","john831","rom1017","mark1123","matt1234","matt1518","eph13","cor1013"],
  path:[
   "Start with Ephesians 6:10. Do not make a promise to yourself that you will simply be stronger next time. Turn to the Lord and draw strength from the power of His might.",
   "Remember Jehovah-Tsidkenu. Jesus paid the debt and provided right standing with the Father. That means temptation and even a setback are reasons to come to God for help, not reasons to hide from Him.",
   "Remember Jehovah-Shalom and Jehovah-Shammah. Through Christ you can have peace with the Father, and the Lord is there. Stay in fellowship with Him instead of moving into secrecy and isolation.",
   "Follow Jehovah-Ra'ah, your Shepherd. You are not alone in the battle. Let Him guide the next step, including leaving the trigger, changing the setting, and bringing the struggle into honest fellowship and accountability.",
   "Put on the Armor. Use the Belt of Truth to expose the lie, the Breastplate of Righteousness against condemnation, the Shield of Faith against doubt, and the Sword of the Spirit by reading and meditating on God's Word.",
-  "Take the way of escape. Close the screen, move the device, leave the private setting, contact support, or use the boundary you prepared. Do not wait until the urge feels weak before obeying truth.",
+  "Take the way of escape. Close the screen, move the device, and leave the private setting. Then go to the Father and His Word first. Find the truth that answers what you are facing; read it, meditate on it, believe it, and make it part of you. If you have trouble finding the biblical answer or still need help, then go to a trustworthy person who can help point you back to God and His Word.",
   "Continue in God's Word. Freedom grows as truth becomes part of you and is lived out. If you slip, run back to the Father immediately, learn where the lie gained ground, and continue walking in God's victory."
  ],
  daily:[
@@ -418,7 +454,7 @@ const TOPICS = [
   ["REMEMBER YOUR STANDING","Jehovah-Tsidkenu: through Christ you can come to the Father. Hebrews 4:16 says to come boldly to the throne of grace for mercy and help in time of need."],
   ["STAY IN FELLOWSHIP","Do not let temptation pull you into spiritual isolation. Jehovah-Shammah reminds you that the Lord is there. Talk to Him and bring the battle into the light."],
   ["ANSWER THE LIE WITH TRUTH","Use the Belt of Truth and Sword of the Spirit. Read your focus Scripture slowly, meditate on it, and let God's Word—not the urge—tell you what is true."],
-  ["TAKE THE WAY OF ESCAPE","Close the screen, put down the device, leave the private place, use the filter or boundary, and contact a trustworthy person. Faith acts on what God says."],
+  ["TAKE THE WAY OF ESCAPE","Close the screen, put down the device, and leave the private place. Then go to the Father and His Word. Read and meditate on the truth that answers this battle. If you still need help or cannot find the biblical answer, reach out to a trustworthy person who can help point you back to God and His Word."],
   ["STAND IN VICTORY","Jehovah-Nissi is your Banner. You are not trying to make yourself victorious by fighting the devil in your own strength. Stand in God's authority and keep following the Shepherd."]
  ],
  afterSlip:[
@@ -608,14 +644,15 @@ const TOPICS = [
 }
 ];
 
-const STORAGE_KEY="life_battles_truth_path_v3";
+const STORAGE_KEY="life_battles_truth_path_v4";
 const state=loadState();
 let currentId=null;
 
 function loadState(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY))||{}}catch(e){return{}}}
 function saveState(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}
 function topicState(id){
-  if(!state[id]) state[id]={path:Array(7).fill(false),daily:Array(5).fill(false),dailyNote:"",verse:""};
+  if(!state[id]) state[id]={path:Array(7).fill(false),daily:Array(5).fill(false),dailyNote:"",verse:"",guided:Array(4).fill("")};
+  if(!Array.isArray(state[id].guided)) state[id].guided=Array(4).fill("");
   return state[id];
 }
 function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
@@ -672,19 +709,27 @@ function openTopic(id){
  </section>
 
  <section class="panel" id="freedomPath">
-   <h3>Your 7-Step Freedom Path</h3>
-   <p class="muted">This is not a score of your spiritual worth and it is not a promise that every battle disappears on a timetable. It is a way to continue in truth and practice the next faithful step.</p>
+   <h3>Your Freedom Path — A Discipleship Walk</h3>
+   <p class="muted">These seven steps are not a formula you finish once, and they are not a promise that a battle disappears in a few days. Freedom may unfold over time. Do not focus on a deadline; focus on fellowship with the Father, continuing in His Word, believing His truth, and living what He shows you.</p>
    <p id="pathCount">${s.path.filter(Boolean).length} of 7 steps worked</p><div class="track"><div id="pathFill" class="fill" style="width:${pct(s.path)}%"></div></div>
    <div class="path-grid">${t.path.map((x,i)=>`<label class="path-step ${s.path[i]?"done":""}"><h4><span class="step-number">${i+1}</span>${["Bring It Into the Light","Expose the Lie","Know Who God Is","Put On the Armor","Take the Faithful Step","Continue in the Word","Walk Forward in Freedom"][i]}</h4><p>${esc(x)}</p><span class="checkrow"><input type="checkbox" data-path="${i}" ${s.path[i]?"checked":""}><span>I worked on this step</span></span></label>`).join("")}</div>
  </section>
 
+ <section class="panel" id="guidedSeeking">
+   <h3>Seek the Father — Guided Questions</h3>
+   <div class="seek-note"><strong>This is not a one-day exercise.</strong> All four questions are open, but do not rush through them just to finish. Bring the question to the Father in faith. He heard you the first time; persistence is not trying to get His attention. Continue asking because you are seriously seeking Him and expecting His guidance. An answer may become clear quickly, or it may take days, weeks, a month, or longer. Do not put God on a timetable. Stay in fellowship with Him and in His Word.</div>
+   <p>Ask God questions without questioning His character. Listen, search His Word, and bring what you believe He is showing you back to Scripture. Every impression must agree with God's Word. If you do not understand yet, it is okay to write <em>“I don't know yet.”</em> Keep seeking Him.</p>
+   <div class="guided-grid">${GUIDED_QUESTIONS[t.id].map((q,i)=>`<div class="guided-card"><h4>${i+1}. ${esc(q)}</h4><p class="small muted">Stay with this question as long as needed. What is the Father showing you through fellowship and His Word?</p><textarea data-guided="${i}" maxlength="8000" placeholder="Write what you are learning. You can return and add to this over time.">${esc(s.guided[i]||"")}</textarea></div>`).join("")}</div>
+   <div class="commitment"><strong>Do not merely discover the answer—continue in the truth.</strong><p class="truth-cycle">Seek the Father → hear His Word → recognize the lie or root → receive His truth → meditate on it → believe it in the heart → speak in agreement with it → act on it → continue in it → make it part of you.</p><p>What becomes established in the heart comes out through thoughts, words, decisions, and actions. Do not continually meditate on and speak the lie you are trying to leave behind. Continue in God's truth until it becomes part of the way you naturally think and live.</p></div>
+ </section>
+
  <section class="panel" id="dailyWalk">
-   <h3>Today's Walk in Truth</h3>
-   <p class="muted">Daily faithfulness is not about earning God's love. It is about continuing in His Word and putting truth into practice today.</p>
+   <h3>Continue Walking in Truth</h3>
+   <p class="muted">These are supports for your ongoing fellowship, not a spiritual scorecard. God's truth is not something to visit only when there is a problem. Continue knowing Him, valuing His Word, and living in fellowship with Him.</p>
    <p id="dailyCount">${s.daily.filter(Boolean).length} of 5 completed today</p><div class="track"><div id="dailyFill" class="fill" style="width:${pct(s.daily)}%"></div></div>
    <div class="daily-grid">
     <div class="daily-card"><div class="daily-title">Today's Five Steps</div>${t.daily.map((x,i)=>`<label class="checkrow"><input type="checkbox" data-daily="${i}" ${s.daily[i]?"checked":""}><span>${esc(x)}</span></label>`).join("")}</div>
-    <div class="daily-card"><div class="daily-title">Today's Reflection</div><p class="small muted">What lie showed up today? What does God's Word say? Who is God in this battle? What is my next faithful action?</p><textarea id="dailyNote" maxlength="6000">${esc(s.dailyNote)}</textarea><div class="tools"><button id="resetDaily">Start a New Daily Check-In</button></div></div>
+    <div class="daily-card"><div class="daily-title">Truth I Am Making Part of Me</div><p class="small muted">What have I been meditating on? What have I been speaking? What does God's Word say instead? What truth am I choosing to meditate on, believe in my heart, speak in agreement with, and live?</p><textarea id="dailyNote" maxlength="6000">${esc(s.dailyNote)}</textarea><div class="tools"><button id="resetDaily">Start a New Daily Check-In</button></div></div>
    </div>
  </section>
 
@@ -695,7 +740,8 @@ function openTopic(id){
  </section>
 
  <section class="panel">
-   <h3>Prayer for This Battle</h3><p class="prayer">${esc(t.prayer)}</p>
+   <h3>Prayer for This Battle</h3><p class="prayer">${esc(PRAYERS[t.id] || t.prayer)}</p>
+   <div class="commitment"><strong>My Freedom Commitment</strong><p>I've decided I won't make peace with this bondage. Therefore, I will persistently seek the Father, draw from the strength He has already provided, remain in His Word, receive the truth He shows me, believe it, meditate on it, speak in agreement with it, apply it, and continue in it.</p><p>I will make His truth part of me so that I do not merely know it in my mind—I live it. As His truth becomes part of me, it will naturally come out through my thoughts, my words, my decisions, and my actions. I will not focus on how long the process takes. I will focus on knowing the Father, believing what He says, and living in the truth He has given me.</p></div>
  </section>
 
  <section class="helpbox" id="rightNow" hidden>
@@ -727,6 +773,7 @@ function bindWorkspace(){
    w.querySelector("#dailyCount").textContent=`${s.daily.filter(Boolean).length} of 5 completed today`;
    w.querySelector("#dailyFill").style.width=pct(s.daily)+"%";
  });
+ w.querySelectorAll("[data-guided]").forEach(ta=>ta.oninput=e=>{s.guided[+ta.dataset.guided]=e.target.value;saveState()});
  w.querySelector("#dailyNote").oninput=e=>{s.dailyNote=e.target.value;saveState()};
  w.querySelector("#resetDaily").onclick=()=>{
    if(confirm("Start a new daily check-in? This will clear today's checkboxes and reflection for this battle.")){
