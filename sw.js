@@ -1,4 +1,4 @@
-const CACHE_NAME = "seven-redemptive-names-v1";
+const CACHE_NAME = "seven-redemptive-names-v2";
 
 const APP_SHELL = [
   "/",
