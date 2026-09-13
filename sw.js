@@ -1,12 +1,18 @@
-const CACHE_NAME = "seven-redemptive-names-v2";
+const CACHE_NAME = "seven-redemptive-names-v4";
 
 const APP_SHELL = [
   "/",
   "/index.html",
-  "/account.html",
+  "/account.html"
+];
+
+const NETWORK_ONLY_FILES = [
   "/manifest.webmanifest",
   "/app-icon-192.png",
-  "/app-icon-512.png"
+  "/app-icon-512.png",
+  "/apple-touch-icon.png",
+  "/favicon-16.png",
+  "/favicon-32.png"
 ];
 
 self.addEventListener("install", (event) => {
@@ -42,6 +48,15 @@ self.addEventListener("fetch", (event) => {
 
   const url = new URL(request.url);
 
+  if (url.origin !== self.location.origin) {
+    return;
+  }
+
+  if (NETWORK_ONLY_FILES.includes(url.pathname)) {
+    event.respondWith(fetch(request));
+    return;
+  }
+
   if (request.mode === "navigate") {
     event.respondWith(
       fetch(request)
@@ -68,29 +83,27 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  if (url.origin === self.location.origin) {
-    event.respondWith(
-      caches.match(request).then((cached) => {
-        if (cached) {
-          return cached;
+  event.respondWith(
+    caches.match(request).then((cached) => {
+      if (cached) {
+        return cached;
+      }
+
+      return fetch(request).then((response) => {
+        if (
+          response &&
+          response.status === 200 &&
+          response.type === "basic"
+        ) {
+          const copy = response.clone();
+
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(request, copy);
+          });
         }
 
-        return fetch(request).then((response) => {
-          if (
-            response &&
-            response.status === 200 &&
-            response.type === "basic"
-          ) {
-            const copy = response.clone();
-
-            caches.open(CACHE_NAME).then((cache) => {
-              cache.put(request, copy);
-            });
-          }
-
-          return response;
-        });
-      })
-    );
-  }
+        return response;
+      });
+    })
+  );
 });
