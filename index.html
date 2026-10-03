@@ -642,16 +642,291 @@
       }
     }
   </style>
+
+<style id="snor-whole-software-theme-2026">
+:root{
+  --sn-cream:#fffaf0;
+  --sn-cream-2:#f8ecd8;
+  --sn-cream-3:#f2dfbf;
+  --sn-burgundy:#790c11;
+  --sn-burgundy-2:#5c080d;
+  --sn-gold:#c49333;
+  --sn-gold-2:#e1bd72;
+  --sn-gold-3:#936720;
+  --sn-text:#3b2519;
+  --sn-muted:#765f4c;
+  --sn-border:#d8b66e;
+  --sn-shadow:0 7px 22px rgba(93,53,17,.11);
+}
+
+html,body{
+  background:
+    radial-gradient(circle at 50% -140px,rgba(242,187,72,.22),transparent 360px),
+    linear-gradient(180deg,var(--sn-cream),var(--sn-cream-2))!important;
+  color:var(--sn-text)!important;
+}
+
+body{
+  min-height:100vh!important;
+}
+
+/* Shared header family */
+.site-header,.topbar{
+  background:linear-gradient(180deg,rgba(255,250,236,.98),rgba(247,229,191,.98))!important;
+  border-bottom:1px solid var(--sn-gold)!important;
+  box-shadow:0 3px 14px rgba(96,56,18,.11)!important;
+  color:var(--sn-text)!important;
+}
+
+.nav-wrap,.header-inner,.topbar-inner{
+  background:transparent!important;
+}
+
+.brand,.top-title{
+  color:var(--sn-burgundy)!important;
+  text-shadow:0 1px 0 #fff9eb!important;
+}
+
+.snor-brand-logo{
+  display:block!important;
+  width:min(350px,38vw)!important;
+  max-height:64px!important;
+  object-fit:contain!important;
+  object-position:left center!important;
+}
+
+.snor-course-logo{
+  display:block!important;
+  width:min(430px,44vw)!important;
+  max-height:72px!important;
+  margin:0 auto!important;
+  object-fit:contain!important;
+  object-position:center!important;
+}
+
+.nav a,.nav-links a,.header-link,.home-link{
+  color:#6f1d1d!important;
+  font-weight:700!important;
+}
+
+.nav a:hover,.nav-links a:hover,.header-link:hover,.home-link:hover{
+  color:var(--sn-burgundy)!important;
+}
+
+.account-button,.account-placeholder{
+  color:var(--sn-burgundy)!important;
+  background:#fff9e9!important;
+  border:1px solid var(--sn-gold)!important;
+  border-radius:10px!important;
+  box-shadow:0 2px 7px rgba(92,52,16,.08)!important;
+  font-weight:700!important;
+}
+
+/* Hero areas */
+.hero,.account-hero{
+  color:var(--sn-text)!important;
+  background:
+    radial-gradient(circle at 80% 22%,rgba(255,202,79,.24),transparent 28%),
+    linear-gradient(135deg,#fffaf0 0%,#f8e8c8 60%,#f1d59a 100%)!important;
+  border-color:var(--sn-border)!important;
+}
+
+.hero h1,.hero h2,.account-hero h1,.account-hero h2,
+.lesson-heading,.section-heading h2,.panel h2,.workspace h2{
+  color:var(--sn-burgundy)!important;
+  text-shadow:0 1px 0 #fff!important;
+}
+
+.hero-kicker,.eyebrow,.category,.mini-ornament{
+  color:var(--sn-gold-3)!important;
+  font-weight:800!important;
+}
+
+.hero-scripture,.tagline,.subtitle,.small,.muted{
+  color:var(--sn-muted)!important;
+}
+
+/* Course/app shells */
+.app,.workspace,.page,.areas,.purpose{
+  background:transparent!important;
+  color:var(--sn-text)!important;
+}
+
+.lesson-nav,.content-panel,.panel,.intro-panel,
+.lesson-card,.section-block,.scripture-box,
+.topic-card,.auth-card,.account-header,
+.card,.purpose-item{
+  background:linear-gradient(180deg,#fffdf8,#fff6e6)!important;
+  color:var(--sn-text)!important;
+  border-color:var(--sn-border)!important;
+  box-shadow:var(--sn-shadow)!important;
+}
+
+.lesson-nav,.content-panel,.panel,.intro-panel,
+.lesson-card,.topic-card,.auth-card,.account-header,.card{
+  border-radius:15px!important;
+}
+
+.lesson-nav-head,.progress-strip,.progress-row,
+.card-body,.lesson-body,.panel-body{
+  color:var(--sn-text)!important;
+}
+
+.lesson-list button,
+.lesson-list a{
+  background:#fff9ea!important;
+  color:#5c221f!important;
+  border-color:#ead2a3!important;
+}
+
+.lesson-list button:hover,
+.lesson-list a:hover{
+  background:#fff1d4!important;
+  color:var(--sn-burgundy)!important;
+}
+
+.lesson-list .active,
+.lesson-list button.active,
+.lesson-list a.active{
+  background:linear-gradient(180deg,#92202a,#710d14)!important;
+  color:#fffaf0!important;
+  border-color:#bd8a3d!important;
+}
+
+/* Progress */
+.progress-track{
+  background:#eadcc2!important;
+  border-color:#d6b573!important;
+}
+
+.progress-fill{
+  background:linear-gradient(90deg,#8d151d,#c69031)!important;
+}
+
+/* Text */
+h1,h2,h3,h4,h5{
+  color:var(--sn-burgundy)!important;
+}
+
+p,li,label,legend,blockquote{
+  color:var(--sn-text)!important;
+}
+
+a{
+  color:#7c261f;
+}
+
+a:hover{
+  color:var(--sn-burgundy);
+}
+
+/* Scripture / teaching emphasis */
+.scripture-box,.verse,.truth{
+  background:#fff7df!important;
+  border-color:#d6af63!important;
+  color:#4b2e20!important;
+}
+
+.lie{
+  background:#f9ece7!important;
+  border-color:#d7a69b!important;
+  color:#6a2823!important;
+}
+
+.name-note{
+  color:#875f1e!important;
+}
+
+/* Buttons */
+button,.primary-button,.primary,.nav-action,.complete-action,
+.card-link,.cta-button,.actions a{
+  background:linear-gradient(180deg,#941d27,#700c13)!important;
+  color:#fffaf0!important;
+  border:1px solid #b98739!important;
+  border-radius:9px!important;
+  box-shadow:0 2px 7px rgba(85,44,13,.10)!important;
+}
+
+button:hover,.primary-button:hover,.primary:hover,.nav-action:hover,
+.complete-action:hover,.card-link:hover,.cta-button:hover,.actions a:hover{
+  background:linear-gradient(180deg,#a72932,#7c1017)!important;
+  color:#fff!important;
+}
+
+.secondary,.text-link{
+  background:#fff8e7!important;
+  color:var(--sn-burgundy)!important;
+  border-color:#d5ad61!important;
+}
+
+/* Forms */
+input,select,textarea{
+  background:#fffdf8!important;
+  color:var(--sn-text)!important;
+  border:1px solid #d6b16a!important;
+  border-radius:8px!important;
+}
+
+input:focus,select:focus,textarea:focus{
+  outline:2px solid rgba(196,147,51,.22)!important;
+  border-color:#b57f28!important;
+}
+
+/* Footer / lower areas */
+footer,.site-footer{
+  background:linear-gradient(180deg,#f7ead1,#edd8b4)!important;
+  color:#4f3424!important;
+  border-top:1px solid #c99c4b!important;
+}
+
+/* Life Battles urgent action remains noticeable without breaking theme */
+.urgent{
+  background:#fff0e8!important;
+  border-color:#cf896e!important;
+  color:#6d241d!important;
+}
+
+/* Responsive */
+@media(max-width:760px){
+  .snor-brand-logo{
+    width:min(225px,56vw)!important;
+    max-height:48px!important;
+  }
+
+  .snor-course-logo{
+    width:min(245px,58vw)!important;
+    max-height:50px!important;
+  }
+
+  .site-header,.topbar{
+    position:sticky!important;
+    top:0!important;
+    z-index:1000!important;
+  }
+
+  .nav-wrap,.header-inner,.topbar-inner{
+    padding-left:10px!important;
+    padding-right:10px!important;
+  }
+
+  .app,.workspace,.page{
+    padding-left:9px!important;
+    padding-right:9px!important;
+  }
+
+  .lesson-nav,.content-panel,.panel,.topic-card,.auth-card{
+    border-radius:11px!important;
+  }
+}
+</style>
+
 </head>
 
 <body id="home">
 
   <header class="site-header">
     <div class="nav-wrap">
-      <a class="brand" href="#home">
-        Seven Redemptive<br>
-        Names of God
-      </a>
+      <a class="brand" href="#home"><img class="snor-brand-logo" src="/seven-redemptive-names-of-god-logo.png" alt="Seven Redemptive Names of God" /></a>
 
       <nav class="nav-links" aria-label="Main navigation">
         <a href="#home">Home</a>
