@@ -523,11 +523,27 @@
 
     @media (max-width: 900px) {
       .nav-wrap {
-        grid-template-columns: 1fr auto;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 10px;
       }
 
+      /* Keep every page available in the top navigation on laptops and phones. */
       .nav-links {
-        display: none;
+        display: flex;
+        grid-column: 1 / -1;
+        grid-row: 2;
+        gap: 18px;
+        width: 100%;
+        min-width: 0;
+        padding: 4px 0 7px;
+        overflow-x: auto;
+        white-space: nowrap;
+        scrollbar-width: thin;
+      }
+
+      .nav-links a {
+        flex: 0 0 auto;
+        font-size: 0.9rem;
       }
 
       .hero {
